@@ -1,23 +1,23 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
-using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[ApiController]
-[Route("api/[Controller]")]
-public class ProductsController(IGenericRepository<Product> repo) : ControllerBase
+
+public class ProductsController(IGenericRepository<Product> repo) : BaseApiController
 {
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts
-        (string? brand, string? type, string? sort)
+        ([FromQuery] ProductSpecParams specParams)
     {
-        var spec = new ProductSpecification(brand, type, sort);
-        var products = await repo.ListAsync(spec);
-        return Ok(products);
+        var spec = new ProductSpecification(specParams);
+        // var products = await repo.ListAsync(spec);
+        // var count = await repo.CountAsync(spec);
+        // var pagination = new Pagination<Product>(specParams.Pageindex, specParams.PageSize, count, products);
+        return Ok(await CreatePagedResult(repo, spec, specParams.Pageindex, specParams.PageSize));
     }
 
     private bool ProductExists(int id)
@@ -98,7 +98,7 @@ public class ProductsController(IGenericRepository<Product> repo) : ControllerBa
     [HttpGet("types")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetTypes()
     {
-         var spec = new TypeListSpecification();
+        var spec = new TypeListSpecification();
         return Ok(await repo.ListAsync(spec));
     }
 }

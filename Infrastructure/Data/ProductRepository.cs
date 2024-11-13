@@ -1,5 +1,3 @@
-using System;
-using System.Security.Cryptography.X509Certificates;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -68,7 +66,6 @@ public class ProductRepository(StoreContext context) : IProductRepository
     public async Task<bool> SaveChangesAsync()
     {
         return await context.SaveChangesAsync() > 0 ;
-        
     }
 
     public void UpdateProduct(Product product)

@@ -13,11 +13,10 @@ public class ProductsController(IGenericRepository<Product> repo) : BaseApiContr
     public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts
         ([FromQuery] ProductSpecParams specParams)
     {
+
         var spec = new ProductSpecification(specParams);
-        // var products = await repo.ListAsync(spec);
-        // var count = await repo.CountAsync(spec);
-        // var pagination = new Pagination<Product>(specParams.Pageindex, specParams.PageSize, count, products);
-        return Ok(await CreatePagedResult(repo, spec, specParams.Pageindex, specParams.PageSize));
+
+        return await CreatePagedResult(repo, spec, specParams.PageIndex, specParams.PageSize);
     }
 
     private bool ProductExists(int id)

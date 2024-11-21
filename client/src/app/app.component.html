@@ -1,1 +1,9 @@
-<h1 class="text-9xl font-bold underline bg-red-950">hi {{title}}</h1>
+<app-header></app-header>
+
+<div class="container mt-6 ">
+    <ul>
+        <li *ngFor="let product of products">
+            {{ product.name }}
+          </li>
+    </ul>
+</div>

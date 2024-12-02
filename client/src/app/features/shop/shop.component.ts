@@ -87,7 +87,6 @@ export class ShopComponent implements OnInit {
   }
 
   openFiltersDialog() {
-
     const dialogRef = this.dialogService.open(FiltersDialogComponent, {
       minWidth: '500px',
       data: {
@@ -95,7 +94,7 @@ export class ShopComponent implements OnInit {
         selectedTypes: this.shopParams.types,
       }
     });
-
+    
     dialogRef.afterClosed().subscribe(
       {
         next: result => {
@@ -111,4 +110,5 @@ export class ShopComponent implements OnInit {
       }
     )
   }
+
 }

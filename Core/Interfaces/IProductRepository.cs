@@ -5,6 +5,7 @@ namespace Core.Interfaces;
 
 public interface IProductRepository
 {
+    // when the database call then only async happen
     Task<IReadOnlyList<Product>> GetProductsAsync(string? brand, string? type, string? sort);
     Task<Product?> GetProductByIdAsync(int id);
     Task<IReadOnlyList<string>> GetBrandsAsync();

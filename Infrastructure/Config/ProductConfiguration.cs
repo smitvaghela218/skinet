@@ -9,7 +9,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
+        // because warning come hen create the migrations threw cmd using dotne
         builder.Property(x => x.Price).HasColumnType("decimal(18,2)");
-       // builder.Property(x=> x.Name).IsRequired();
+        // builder.Property(x=> x.Name).IsRequired();
     }
 }

@@ -10,7 +10,7 @@ export class SnackbarService {
 
   error(message: string) {
     this.snackbar.open(message, 'Close', {
-      duration: 50000000,
+      duration: 5000,
       panelClass: ['snack-error'] //for styling override the 
     })
   }

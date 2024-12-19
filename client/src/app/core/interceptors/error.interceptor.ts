@@ -14,6 +14,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         if (err.status == 400) {
           if (err.error.errors) {
             const modelStateErrors = []
+            // console.log(err);
             for (const key in err.error.errors) {
               if (err.error.errors[key]) {
                 modelStateErrors.push(err.error.errors[key])

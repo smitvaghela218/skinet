@@ -80,7 +80,7 @@ export class CartService {
   }
 
   addItemToCart(item: CartItem | Product, quantity = 1) {
-    console.log(this.cart());
+    // console.log(this.cart());
 
     const cart = this.cart() ?? this.createCart();
     if (this.isProduct(item)) {

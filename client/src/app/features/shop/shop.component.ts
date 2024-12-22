@@ -69,7 +69,7 @@ export class ShopComponent implements OnInit {
   }
 
   handlePageEvent(event: PageEvent) {
-    console.log(event);
+    // console.log(event);
     this.shopParams.pageIndex = event.pageIndex + 1;
     this.shopParams.pageSize = event.pageSize;
     this.getProducts();
@@ -94,7 +94,7 @@ export class ShopComponent implements OnInit {
         selectedTypes: this.shopParams.types,
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(
       {
         next: result => {

@@ -32,7 +32,7 @@ builder.Services.AddSingleton<ICartService, CartService>();
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<StoreContext>();
-
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 var app = builder.Build();
 

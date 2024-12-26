@@ -34,7 +34,7 @@ public class BuggyController : BaseApiController
     }
 
     [HttpPost("validationerror")]
-    public IActionResult GetValidationError(Product product)
+    public IActionResult GetValidationError(CreateProductDto product)
     {
         return Ok();
     }

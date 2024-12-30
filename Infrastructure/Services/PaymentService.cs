@@ -9,8 +9,9 @@ namespace Infrastructure.Services;
 public class PaymentService(
     IConfiguration config,
     ICartService cartService,
-    IGenericRepository<Core.Entities.Product> productRepo,
-    IGenericRepository<DeliveryMethod> dmRepo
+    // IGenericRepository<Core.Entities.Product> unit.Repository<Product>(),
+    // IGenericRepository<DeliveryMethod> unit.Repository<DeliveryMethod>()
+    IUnitOfWork unit
 
 ) : IPaymentService
 {
@@ -26,7 +27,7 @@ public class PaymentService(
 
         if (cart.DeliveryMethodId.HasValue)
         {
-            var deliveryMethod = await dmRepo.GetByIdAsync((int)cart.DeliveryMethodId);
+            var deliveryMethod = await unit.Repository<DeliveryMethod>().GetByIdAsync((int)cart.DeliveryMethodId);
 
             if (deliveryMethod == null) return null;
 
@@ -35,7 +36,7 @@ public class PaymentService(
 
         foreach (var item in cart.Items)
         {
-            var productItem = await productRepo.GetByIdAsync(item.ProductId);
+            var productItem = await unit.Repository<Core.Entities.Product>().GetByIdAsync(item.ProductId);
             if (productItem == null) return null;
 
             if (item.Price != productItem.Price)
@@ -54,7 +55,7 @@ public class PaymentService(
             {
                 Amount = (long)cart.Items.Sum(x => x.Quantity * (x.Price * 100)) +
                             (long)shippingPrice * 100,
-                Currency = "usd",
+                Currency = "INR",
                 PaymentMethodTypes = ["card"]
             };
             intent = await service.CreateAsync(options);

@@ -1,15 +1,15 @@
-// @use '@angular/material' as mat;
+@use '@angular/material' as mat;
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// $customTheme: mat.define-theme();
+$customTheme: mat.define-theme();
 
-// @include mat.core();
+@include mat.core();
 
 .custom-theme {
-  // @include mat.all-component-themes($customTheme);
+  @include mat.all-component-themes($customTheme);
 
   // override the button styles
   .mdc-button,

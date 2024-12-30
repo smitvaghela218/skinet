@@ -31,6 +31,7 @@ export class ProductDetailsComponent implements OnInit {
   private shopService = inject(ShopService)
   private activatedRoute = inject(ActivatedRoute);
   private cartService = inject(CartService);
+
   product?: Product;
   quantityInCart = 0;
   quantity = 1;
@@ -41,7 +42,7 @@ export class ProductDetailsComponent implements OnInit {
 
   loadProduct() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    
+
     if (!id) {
       return;
     }
@@ -57,7 +58,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   updateCart() {
-    
+
     if (!this.product) {
       return
     }
@@ -66,6 +67,11 @@ export class ProductDetailsComponent implements OnInit {
       const itemsToAdd = this.quantity - this.quantityInCart;
       this.quantityInCart += itemsToAdd;
       this.cartService.addItemToCart(this.product, itemsToAdd);
+      console.log('itemsToAdd ' + itemsToAdd);
+      if (this.quantity > 5) {
+        this.quantity = 5;
+        this.quantityInCart = 5;
+      }
     }
 
     else {
@@ -73,7 +79,7 @@ export class ProductDetailsComponent implements OnInit {
       this.quantityInCart -= itemsToRemove;
       this.cartService.removeItemFromCart(this.product.id, itemsToRemove);
     }
-    
+
   }
 
   updateQuantityInCart() {

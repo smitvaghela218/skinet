@@ -5,12 +5,13 @@ import { Cart, CartItem } from '../../shared/models/cart';
 import { Product } from '../../shared/models/product';
 import { map } from 'rxjs';
 import { DeliveryMethod } from '../../shared/models/deliveryMethod';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-
+  private snackbar = inject(SnackbarService);
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
   cart = signal<Cart | null>(null);
@@ -90,18 +91,28 @@ export class CartService {
     if (this.isProduct(item)) {
       item = this.mapProductToCartItem(item);
     }
-    cart.items = this.addOrUpdateItem(cart.items, item, quantity);
-    this.setCart(cart);
+    var CartItems = this.addOrUpdateItem(cart.items, item, quantity);
+    if (CartItems) {
+      cart.items = CartItems;
+      this.setCart(cart);
+    }
   }
 
-  private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number): CartItem[] {
+  private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number): CartItem[] | null {
     const index = items.findIndex(x => x.productId == item.productId);
+    if (quantity > 5 || (index != -1 && items[index].quantity == 5)) {
+      this.snackbar.error('Max 5 Qty Buy Of Any Product ');
+    }
     if (index == -1) {
-      item.quantity = quantity;
+      item.quantity = quantity >= 5 ? 5 : quantity;
       items.push(item);
     }
     else {
-      items[index].quantity += quantity;
+      if (items[index].quantity == 5) {
+        return null;
+      } else {
+        items[index].quantity += (5 - items[index].quantity);
+      }
     }
     return items;
   }

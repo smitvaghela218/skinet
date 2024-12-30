@@ -10,6 +10,7 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
   protected BaseSpecification() : this(null) { }
 
   public Expression<Func<T, bool>>? Criteria => criteria;
+  // public Expression<Func<T, bool>>? Criteria { get { return criteria; } }
 
   public Expression<Func<T, object>>? OrderBy { get; private set; }
 
@@ -22,6 +23,9 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
   public int Skip { get; private set; }
 
   public bool IsPagingEnabled { get; private set; }
+  public List<Expression<Func<T, object>>> Includes { get; } = [];
+
+  public List<string> IncludeStrings { get; } = [];
 
   public IQueryable<T> ApplyCriteria(IQueryable<T> query)
   {
@@ -31,6 +35,19 @@ public class BaseSpecification<T>(Expression<Func<T, bool>>? criteria) : ISpecif
     }
     return query;
   }
+
+  // For directly included properties x= Order
+  protected void AddInclude(Expression<Func<T, object>> includeExpressions)
+  {
+    Includes.Add(includeExpressions); // Example: x => x.OrderItems
+  }
+
+  // For string-based includes or chainable includes parent = Order
+  protected void AddInclude(string includeString)
+  {
+    IncludeStrings.Add(includeString); // Example: "OrderItems.Product.Category" or "OrderItems"
+  }
+
 
   protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
   {

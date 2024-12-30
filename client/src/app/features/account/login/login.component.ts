@@ -19,7 +19,7 @@ import { delay } from 'rxjs';
     MatInput,
     MatLabel,
     MatButton,
-    JsonPipe,
+    // JsonPipe,
     MatError
   ],
   templateUrl: './login.component.html',

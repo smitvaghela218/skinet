@@ -10,6 +10,8 @@ public interface ISpecification<T>
     // here we have to pass this expression to specification evaluator so write the get;
     Expression<Func<T, Object>>? OrderBy { get; }
     Expression<Func<T, Object>>? OrderByDescending { get; }
+    List<Expression<Func<T, object>>> Includes { get; }
+    List<string> IncludeStrings { get; } // For ThenInclude
     bool IsDistinct { get; }
     int Take { get; }
     int Skip { get; }

@@ -4,7 +4,7 @@
         <dt class="font-medium">Shipping address</dt>
         <dd class="mt-1 text-gray-500"> {{confirmationToken?.shipping | address}}</dd>
         <dt class="font-medium">Payment details</dt>
-        <dd class="mt-1 text-gray-500"> {{confirmationToken?.payment_method_preview?.card | paymentCard}}</dd>
+        <dd class="mt-1 text-gray-500"> {{confirmationToken?.payment_method_preview | paymentCard}}</dd>
     </dl>
 </div>
 

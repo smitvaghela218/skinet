@@ -25,7 +25,7 @@
 
                     <mat-form-field appearance="outline" class="flex">
                         <mat-label>Quantity</mat-label>
-                        <input matInput min="0" max="5" [(ngModel)]="quantity" type="number" />
+                        <input matInput min="{{cartService.minQuantity}}" max="{{cartService.maxQuantity}}" [(ngModel)]="quantity" type="number" />
                     </mat-form-field>
                 </div>
 

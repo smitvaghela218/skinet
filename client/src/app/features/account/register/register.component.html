@@ -8,7 +8,7 @@
         <app-text-input label="First name" formControlName="firstName" />
         <app-text-input label="Last name" formControlName="lastName" />
         <app-text-input label="Email address" formControlName="email" />
-        <app-text-input label="Password" formControlName="password" type="password" />
+        <app-text-input label="Password" formControlName="password" [type]="showPassword ? 'text' : 'password'" />
 
         @if (validationErrors) {
         <div class="mb-3 p-4 bg-red-100 text-red-600">
@@ -19,6 +19,10 @@
             </ul>
         </div>
         }
+        <!-- <mat-checkbox class="mb-1" [checked]="showPassword" (change)="onShowPasswordCheckboxChange($event)">
+            Show Password
+        </mat-checkbox> -->
+
         <button [disabled]="registerForm.invalid" mat-flat-button type="submit" class="w-full py-2">Register</button>
 
     </form>

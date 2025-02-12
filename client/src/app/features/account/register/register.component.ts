@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AccountService } from '../../../core/services/account.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 import { TextInputComponent } from '../../../shared/components/text-input/text-input.component';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,8 @@ import { TextInputComponent } from '../../../shared/components/text-input/text-i
     MatButton,
     JsonPipe,
     MatError,
-    TextInputComponent
+    TextInputComponent,
+    MatCheckbox
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -33,6 +35,7 @@ export class RegisterComponent {
   private router = inject(Router);
   private snack = inject(SnackbarService);
   validationErrors?: string[];
+  showPassword = false;
 
   registerForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -52,5 +55,8 @@ export class RegisterComponent {
 
     })
   }
-
+  onShowPasswordCheckboxChange(event: MatCheckboxChange) {
+    this.showPassword = event.checked;
+    // console.log(this.saveAddress);
+  }
 }

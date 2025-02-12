@@ -17,16 +17,18 @@
             <mat-error>Email is invalid</mat-error>
             }
         </mat-form-field>
-
         <mat-form-field appearance="outline" class="w-full mb-4">
             <mat-label>Password</mat-label>
-            <input formControlName="password" type="password" placeholder="Password" matInput />
+            <input formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Password"
+                matInput />
             @if(loginForm.get('password')?.hasError('required'))
             {
             <mat-error>password is required</mat-error>
             }
         </mat-form-field>
-
+        <!-- <mat-checkbox class="w-full mb-1" [checked]="showPassword" (change)="onShowPasswordCheckboxChange($event)">
+            Show Password
+        </mat-checkbox> -->
 
         <button [disabled]="loginForm.invalid" mat-flat-button type="submit" class="w-full py-2">Sign in</button>
 

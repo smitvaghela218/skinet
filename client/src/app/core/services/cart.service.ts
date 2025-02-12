@@ -11,6 +11,8 @@ import { SnackbarService } from './snackbar.service';
   providedIn: 'root'
 })
 export class CartService {
+  minQuantity = 0;
+  maxQuantity = 10;
   private snackbar = inject(SnackbarService);
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
@@ -99,21 +101,31 @@ export class CartService {
   }
 
   private addOrUpdateItem(items: CartItem[], item: CartItem, quantity: number): CartItem[] | null {
+    // console.log("addOrUpdateItem ");
+    // console.log("quantity " + quantity);
+
     const index = items.findIndex(x => x.productId == item.productId);
-    if (quantity > 5 || (index != -1 && items[index].quantity == 5)) {
-      this.snackbar.error('Max 5 Qty Buy Of Any Product ');
+
+    if (quantity > this.maxQuantity || (index != -1 && items[index].quantity + quantity > this.maxQuantity)) {
+
+      this.snackbar.error(`Max ${this.maxQuantity}  Qty Buy Of Any Product `);
     }
+
     if (index == -1) {
-      item.quantity = quantity >= 5 ? 5 : quantity;
+      item.quantity = quantity >= this.maxQuantity ? this.maxQuantity : quantity;
       items.push(item);
     }
+
     else {
-      if (items[index].quantity == 5) {
+      if (items[index].quantity == this.maxQuantity) {
         return null;
+      } else if (items[index].quantity + quantity >= this.maxQuantity) {
+        items[index].quantity = this.maxQuantity;
       } else {
-        items[index].quantity += (5 - items[index].quantity);
+        items[index].quantity += quantity;
       }
     }
+
     return items;
   }
 

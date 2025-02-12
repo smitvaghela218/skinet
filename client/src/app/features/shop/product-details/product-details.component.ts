@@ -30,7 +30,7 @@ export class ProductDetailsComponent implements OnInit {
 
   private shopService = inject(ShopService)
   private activatedRoute = inject(ActivatedRoute);
-  private cartService = inject(CartService);
+  cartService = inject(CartService);
 
   product?: Product;
   quantityInCart = 0;
@@ -67,11 +67,12 @@ export class ProductDetailsComponent implements OnInit {
       const itemsToAdd = this.quantity - this.quantityInCart;
       this.quantityInCart += itemsToAdd;
       this.cartService.addItemToCart(this.product, itemsToAdd);
-      console.log('itemsToAdd ' + itemsToAdd);
-      if (this.quantity > 5) {
-        this.quantity = 5;
-        this.quantityInCart = 5;
+      if (this.quantity > this.cartService.maxQuantity) {
+        this.quantity = this.cartService.maxQuantity;
+        this.quantityInCart = this.cartService.maxQuantity;
       }
+      // console.log('itemsToAdd ' + itemsToAdd + "quantity " + this.quantity + "this.quantityInCart " + this.quantityInCart);
+
     }
 
     else {

@@ -8,6 +8,7 @@ import { AccountService } from '../../../core/services/account.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { delay } from 'rxjs';
+import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ import { delay } from 'rxjs';
     MatLabel,
     MatButton,
     // JsonPipe,
-    MatError
+    MatError,
+    MatCheckbox
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -31,6 +33,7 @@ export class LoginComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   returnUrl = '/shop';
+  showPassword = false;
 
   constructor() {
     const url = this.activatedRoute.snapshot.queryParams['returnUrl'];
@@ -44,6 +47,7 @@ export class LoginComponent {
     password: ['', Validators.required]
   })
 
+
   onSubmit() {
     this.accountService.login(this.loginForm.value).subscribe({
       next: () => {
@@ -52,5 +56,10 @@ export class LoginComponent {
         this.router.navigateByUrl(this.returnUrl);
       }
     })
+  }
+
+  onShowPasswordCheckboxChange(event: MatCheckboxChange) {
+    this.showPassword = event.checked;
+    // console.log(this.saveAddress);
   }
 }

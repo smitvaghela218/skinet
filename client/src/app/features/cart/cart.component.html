@@ -1,7 +1,7 @@
 @if ((cartService.cart()?.items?.length ?? 0) >0) {
-<section>
+<section class="mx-5">
     <!-- <div class="mx-auto max-w-screen-xl"> -->
-    <div class="flex w-full items-start gap-6 mt-32">
+    <div class="flex w-full items-start gap-6 mt-32 ">
         <div class="w-3/4">
             @for (item of cartService.cart()?.items; track item.productId) {
             <app-cart-item [item]="item"></app-cart-item>

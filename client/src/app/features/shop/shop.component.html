@@ -1,5 +1,5 @@
 @if (products) {
-<div class="flex flex-col gap-3 ">
+<div class="flex flex-col gap-3 mx-5 pb-5">
     <div class="flex justify-between ">
         <mat-paginator class="bg-white" (page)="handlePageEvent($event)" [length]="products.count"
             [pageSize]="products.pageSize" [showFirstLastButtons]="true" [pageSizeOptions]="pageSizeOptions"

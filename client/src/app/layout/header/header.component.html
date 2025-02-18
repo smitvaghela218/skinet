@@ -6,6 +6,10 @@
             <a routerLink="/shop" routerLinkActive="active">Shop</a>
             <!-- <a routerLink="/test-error" routerLinkActive="active">Errors</a> -->
             <a routerLink="/orders" routerLinkActive="active">Orders</a>
+            <!-- @if (accountService.isAdmin()) {
+            <a routerLink="/admin" routerLinkActive="active">Admin</a>
+            } -->
+            <a *appIsAdmin routerLink="/admin" routerLinkActive="active">Admin</a>
 
         </nav>
         <div class="flex gap-3 align-middle">

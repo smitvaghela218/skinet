@@ -14,5 +14,6 @@ public enum OrderStatus
     [EnumMember(Value = "Payment Failed")]
     PaymentFailed,
 
-    PaymentMismatch
+    PaymentMismatch,
+    Refunded
 }

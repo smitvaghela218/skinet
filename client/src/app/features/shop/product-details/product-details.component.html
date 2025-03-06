@@ -1,21 +1,41 @@
 @if (product) {
-<section class="py-8">
-    <div class="max-w-screen-2xl px-4 mx-auto">
-        <div class="grid grid-cols-2 gap-8">
-            <div class="max-w-xl mx-auto">
-                <img class="w-full" src="{{product.pictureUrl}}" alt="product image">
+<section class="py-12 ">
+    <div class="max-w-screen-xl px-6 mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <!-- Product Image -->
+            <div class="max-w-lg mx-auto">
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <img class="w-full h-96 object-cover rounded-lg" src="/images/products/{{product.pictureUrl}}"
+                        alt="Product image">
+                </div>
             </div>
 
-            <div>
-                <h1 class="text-2xl font-semibold text-gray-900">{{product.name}}</h1>
-                <p>You have {{quantityInCart}} of this item in your cart</p>
+            <!-- Product Details -->
+            <div class="space-y-6">
+                <h1 class="text-3xl font-bold text-gray-900">{{product.name}}</h1>
+                <p class="text-gray-600">You have <span class="font-medium text-gray-800">{{quantityInCart}}</span> of
+                    this item in your cart</p>
 
-                <div class="mt-4 items-center gap-4 flex">
-                    <p class="text-3xl font-extrabold text-gray-900">
-                        {{product.price | currency : 'INR'}}
+                <div class="flex items-center space-x-4">
+                    <p class="text-4xl font-extrabold">
+                        {{product.price | currency: 'INR'}}
                     </p>
                 </div>
 
+                <!-- Quantity & Button
+                <div class="flex items-center gap-4">
+                    <mat-form-field appearance="outline" class="flex w-32">
+                        <mat-label>Quantity</mat-label>
+                        <input matInput min="{{cartService.minQuantity}}" max="{{cartService.maxQuantity}}"
+                            [(ngModel)]="quantity" type="number" />
+                    </mat-form-field>
+
+                    <button mat-flat-button [disabled]="quantity == quantityInCart" (click)="updateCart()"
+                        class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                        <mat-icon class="mr-2">shopping_cart</mat-icon>
+                        {{getButtonText()}}
+                    </button>
+                </div> -->
                 <div class="flex gap-4 mt-6">
                     <button mat-flat-button [disabled]="quantity == quantityInCart" (click)="updateCart()"
                         class="match-input-height">
@@ -25,17 +45,18 @@
 
                     <mat-form-field appearance="outline" class="flex">
                         <mat-label>Quantity</mat-label>
-                        <input matInput min="{{cartService.minQuantity}}" max="{{cartService.maxQuantity}}" [(ngModel)]="quantity" type="number" />
+                        <input matInput min="{{cartService.minQuantity}}" max="{{cartService.maxQuantity}}"
+                            [(ngModel)]="quantity" type="number" />
                     </mat-form-field>
                 </div>
 
                 <mat-divider></mat-divider>
 
-                <p class="mt-6 text-gray-500">
+                <!-- Product Description -->
+                <p class="mt-6 text-gray-700 leading-relaxed">
                     {{product.description}}
                 </p>
             </div>
-
         </div>
     </div>
 </section>

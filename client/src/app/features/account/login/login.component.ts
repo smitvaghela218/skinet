@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { delay } from 'rxjs';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
     MatButton,
     // JsonPipe,
     MatError,
-    MatCheckbox
+    MatCheckbox,
+    MatIcon
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

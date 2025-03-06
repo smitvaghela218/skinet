@@ -13,6 +13,10 @@
 
  
   <ItemGroup>
+    <PackageReference Include="CoreAdmin" Version="3.0.0" />
+    <PackageReference Include="File_Uploader" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

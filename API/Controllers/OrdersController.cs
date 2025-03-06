@@ -94,4 +94,23 @@ public class OrdersController(ICartService cartService, IUnitOfWork unit) : Base
 
         return Ok(order.ToDto());
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id:int}")]
+    public async Task<ActionResult> DeleteOrder(int id)
+    {
+        var order = await unit.Repository<Order>().GetByIdAsync(id);
+
+        if (order == null)
+            return NotFound();
+
+        unit.Repository<Order>().Remove(order);
+
+        if (await unit.Complete())
+        {
+            return NoContent();
+        }
+
+        return BadRequest("Problem deleting the order");
+    }
 }

@@ -1,0 +1,96 @@
+<!-- HEADER SECTION -->
+<div
+    class="flex flex-wrap items-center justify-between max-w-screen-2xl mx-auto bg-gradient-to-r from-white to-gray-100 p-4 rounded-lg shadow-md border border-gray-200">
+    <!-- Left Side: Title with Icon -->
+    <div class="flex items-center gap-2">
+        <mat-icon class="text-blue-600">people</mat-icon>
+        <h2 class="text-2xl font-semibold text-gray-800">Skinet Users</h2>
+    </div>
+
+    <!-- Right Side: Buttons & Filter -->
+    <div class="flex flex-wrap items-center gap-4">
+        <!-- Add User Button -->
+        <button routerLink="/admin/user"
+            class="bg-blue-600 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-md hover:bg-blue-700 transition-all">
+            + Add User
+        </button>
+
+        <!-- Filter by Role -->
+        <mat-form-field appearance="outline" class="w-56 h-12">
+            <mat-label>Filter by Role</mat-label>
+            <mat-select (selectionChange)="onUserFilterSelect($event)">
+                @for (role of rolesOptions; track $index) {
+                <mat-option [value]="role">{{ role }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+
+<!-- TABLE SECTION -->
+<div class="p-6">
+    <div class="mat-elevation-z8 rounded-lg overflow-hidden shadow-xl">
+        <table mat-table [dataSource]="users" class="w-full bg-white">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700">No.</th>
+                <td mat-cell *matCellDef="let user"> {{user.id}} </td>
+            </ng-container>
+
+            <!-- First Name Column -->
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700">First Name</th>
+                <td mat-cell *matCellDef="let user"> {{user.firstName}} </td>
+            </ng-container>
+
+            <!-- Last Name Column -->
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700">Last Name</th>
+                <td mat-cell *matCellDef="let user"> {{user.lastName}} </td>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700">Email</th>
+                <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+            </ng-container>
+
+            <!-- Roles Column -->
+            <ng-container matColumnDef="roles">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700">Roles</th>
+                <td mat-cell *matCellDef="let user"> {{user.roles}} </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="text-left text-gray-700">Actions</th>
+                <td mat-cell *matCellDef="let user">
+                    <div class="flex gap-2">
+                        <!-- DELETE BUTTON -->
+                        <button matTooltip="Delete" mat-icon-button
+                            class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-md transition"
+                            (click)="opendeleteUserDialog(user.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                        <!-- EDIT BUTTON -->
+                        <button matTooltip="Edit" [routerLink]="['/admin/user', user.id]" mat-icon-button
+                            class="bg-teal-600 hover:bg-teal-700 text-white p-2 rounded-md transition">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="userColumns" class="bg-[#f3f4f6]"></tr>
+            <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+        </table>
+    </div>
+
+    <!-- PAGINATION -->
+    <mat-paginator class="bg-white p-2 rounded-b-lg shadow-md" [pageSizeOptions]="[5, 10, 20]" [length]="usersCount"
+        [pageSize]="userParams.pageSize" (page)="onUserPageChange($event)" showFirstLastButtons>
+    </mat-paginator>
+</div>

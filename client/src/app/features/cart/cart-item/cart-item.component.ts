@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { DialogService } from '../../../core/services/dialog.service';
 
 @Component({
   selector: 'app-cart-item',
@@ -21,6 +22,16 @@ import { MatIcon } from '@angular/material/icon';
 export class CartItemComponent {
   item = input.required<CartItem>();
   cartService = inject(CartService);
+  private dialogService = inject(DialogService);
+
+  async openRemoveItemDialog() {
+    const confirmed = await this.dialogService.confirm(
+      'Confirm delete',
+      'Are you sure you want to remove item'
+    )
+
+    if (confirmed) this.removeItemFromCart();
+  }
 
   incrementQuantity() {
     this.cartService.addItemToCart(this.item());

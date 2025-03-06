@@ -1,0 +1,160 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Total Users Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+        <div class="bg-blue-500 p-4 rounded-full text-white mb-4">
+            <i class="fa-solid fa-users text-3xl"></i>
+        </div>
+        <h3 class="text-gray-600 text-lg">Total Users</h3>
+        <p class="text-2xl font-semibold text-gray-900">{{ dashboardData?.totalUsers }}</p>
+    </div>
+
+    <!-- Total Products Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+        <div class="bg-green-500 p-4 rounded-full text-white mb-4">
+            <i class="fa-solid fa-box-open text-3xl"></i>
+        </div>
+        <h3 class="text-gray-600 text-lg">Total Products</h3>
+        <p class="text-2xl font-semibold text-gray-900">{{ dashboardData?.totalProducts }}</p>
+    </div>
+
+    <!-- Total Orders Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+        <div class="bg-orange-500 p-4 rounded-full text-white mb-4">
+            <i class="fa-solid fa-shopping-cart text-3xl"></i>
+        </div>
+        <h3 class="text-gray-600 text-lg">Total Orders</h3>
+        <p class="text-2xl font-semibold text-gray-900">{{ dashboardData?.totalOrders }}</p>
+    </div>
+
+    <!-- Total Sales Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+        <div class="bg-purple-500 p-4 rounded-full text-white mb-4">
+            <i class="fa-solid fa-money-bill-wave text-3xl"></i>
+        </div>
+        <h3 class="text-gray-600 text-lg">Total Sales</h3>
+        <p class="text-2xl font-semibold text-gray-900">{{ dashboardData?.totalSales | currency: 'INR' }}</p>
+    </div>
+</div>
+
+
+<br>
+
+<div *ngIf="dashboardData?.recentOrders?.length || dashboardData?.recentProducts?.length"
+    class="grid grid-cols-2 gap-8 mb-8">
+    <!-- Recent Orders -->
+    <div>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Recent Orders</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-[#7d00fa] text-white uppercase text-sm tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 text-center">#</th>
+                        <th class="text-left px-6 py-4">Buyer Email</th>
+                        <th class="text-left px-6 py-4">Total Amount</th>
+                        <th class="text-left px-6 py-4">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-gray-50">
+                    <tr *ngFor="let order of dashboardData?.recentOrders; let i = index"
+                        class="hover:bg-[#f4ebff] transition duration-200 even:bg-gray-100">
+                        <td class="px-6 py-4 text-center font-medium text-gray-900">{{ i + 1 }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ order.buyerEmail }}</td>
+                        <td class="px-6 py-4 font-semibold ">{{ order.totalAmount | currency: 'INR' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-3 py-1 text-sm font-semibold rounded-lg" [ngClass]="{
+                                                                      'bg-yellow-500': order.status === 'Pending',
+                            'bg-green-600': order.status === 'PaymentReceived',
+                            'bg-red-600': order.status === 'PaymentFailed',
+                            'bg-orange-500': order.status === 'PaymentMismatch',
+                            'bg-gray-500': order.status === 'Refunded'
+                                }">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recent Products -->
+    <div>
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Recent Products</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-[#7d00fa] text-white uppercase text-sm tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 text-center">#</th>
+                        <th class="text-left px-6 py-4">Name</th>
+                        <th class="text-left px-6 py-4">Price</th>
+                        <th class="text-left px-6 py-4">Brand</th>
+                        <th class="text-left px-6 py-4">Type</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-gray-50">
+                    <tr *ngFor="let product of dashboardData?.recentProducts; let i = index"
+                        class="hover:bg-[#f4ebff] transition duration-200 even:bg-gray-100">
+                        <td class="px-6 py-4 text-center font-medium text-gray-900">{{ i + 1 }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ product.name }}</td>
+                        <td class="px-6 py-4 font-semibold ">{{ product.price | currency: 'INR' }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ product.brand }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ product.type }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-col lg:flex-row gap-6">
+    <!-- Recent Payments -->
+    <div *ngIf="dashboardData?.recentPayments?.length" class="w-full lg:w-1/2">
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Recent Payments</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-[#7d00fa] text-white uppercase text-sm tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 text-center">#</th>
+                        <th class="text-left px-6 py-4">Buyer Email</th>
+                        <th class="text-left px-6 py-4">Amount Paid</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-gray-50">
+                    <tr *ngFor="let payment of dashboardData?.recentPayments; let i = index"
+                        class="hover:bg-[#f4ebff] transition duration-200 even:bg-gray-100">
+                        <td class="px-6 py-4 text-center font-medium text-gray-900">{{ i + 1 }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ payment.buyerEmail }}</td>
+                        <td class="px-6 py-4 font-semibold ">{{ payment.amountPaid | currency: 'INR' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Top Customers -->
+    <div *ngIf="dashboardData?.topCustomers?.length" class="w-full lg:w-1/2">
+        <h3 class="text-2xl font-semibold mb-4 text-gray-800">Top Customers</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
+                <thead class="bg-[#7d00fa] text-white uppercase text-sm tracking-wider">
+                    <tr>
+                        <th class="px-6 py-4 text-center">#</th>
+                        <th class="text-left px-6 py-4">Customer</th>
+                        <th class="text-left px-6 py-4">Total Spent</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-gray-50">
+                    <tr *ngFor="let customer of dashboardData?.topCustomers; let i = index"
+                        class="hover:bg-[#f4ebff] transition duration-200 even:bg-gray-100">
+                        <td class="px-6 py-4 text-center font-medium text-gray-900">{{ i + 1 }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ customer.customer }}</td>
+                        <td class="px-6 py-4 font-semibold ">{{ customer.totalSpent | currency: 'INR' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,15 @@ import { OrderDetailedComponent } from './features/orders/order-detailed/order-d
 import { orderCompleteGuard } from './core/guards/order-complete.guard';
 import { AdminComponent } from './features/admin/admin.component';
 import { adminGuard } from './core/guards/admin.guard';
+import { AddProductComponent } from './features/admin/add-product/add-product.component';
+import { EditProductComponent } from './features/admin/edit-product/edit-product.component';
+import { AddUserComponent } from './features/admin/add-user/add-user.component';
+import { EditUserComponent } from './features/admin/edit-user/edit-user.component';
+import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
+import { ProductTableComponent } from './features/admin/product-table/product-table.component';
+import { UserTableComponent } from './features/admin/user-table/user-table.component';
+import { OrderTableComponent } from './features/admin/order-table/order-table.component';
+import { TestGridComponent } from './test-grid/test-grid.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -30,8 +39,17 @@ export const routes: Routes = [
     { path: 'account/login', component: LoginComponent },
     { path: 'account/register', component: RegisterComponent },
     { path: 'test-error', component: TestErrorComponent },
+    { path: 'test', component: TestGridComponent },
     { path: 'not-found', component: NotFoundComponent },
     { path: 'server-error', component: ServerErrorComponent },
-    { path: 'admin', component: AdminComponent, canActivate: [authGuard,adminGuard] },
+    { path: 'admin', component: AdminComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/product-table', component: ProductTableComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/product', component: AddProductComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/product/:id', component: EditProductComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/user-table', component: UserTableComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/user', component: AddUserComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/user/:id', component: EditUserComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/order-table', component: OrderTableComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard, adminGuard] },
     { path: '**', redirectTo: 'not-found', pathMatch: 'full' }, // default pathMatch is prefix
 ];

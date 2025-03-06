@@ -11,7 +11,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
   if (accountService.isAdmin()) {
     return true;
   } else {
-    snack.error('Nope');
+    snack.error('Admin Role is Required');
     router.navigateByUrl('/shop');
     return false;
   }

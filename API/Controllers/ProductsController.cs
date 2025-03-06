@@ -1,6 +1,7 @@
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using FileUploader.App.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,20 +39,42 @@ public class ProductsController(IUnitOfWork unit) : BaseApiController
 
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public async Task<ActionResult<Product>> CreateProduct(Product product)
+    public async Task<ActionResult<Product>> CreateProduct([FromForm] Product product, IFormFile file)
     {
-        unit.Repository<Product>().Add(product);
+        if (file == null || file.Length == 0)
+            return BadRequest("No file uploaded.");
 
+        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+        var fileExtension = Path.GetExtension(file.FileName).ToLower();
+
+        if (!allowedExtensions.Contains(fileExtension))
+            return BadRequest("Invalid file type. Allowed formats: jpg, jpeg, png.");
+
+        long maxFileSize = 2 * 1024 * 1024; // 5MB
+        if (file.Length > maxFileSize)
+            return BadRequest("File size exceeds the 2MB limit.");
+
+        string fileName = $"{Guid.NewGuid()}";
+
+        bool uploadSuccess = await FileUploaderOperations.UploadFile(file, fileName, @"images/products");
+
+        if (!uploadSuccess)
+            return BadRequest("File upload failed.");
+
+        product.PictureUrl = $"{fileName}{file.FileName}";
+
+        unit.Repository<Product>().Add(product);
         await unit.Complete();
 
-        return product;
+        return Ok(product);
     }
+
 
 
 
     [Authorize(Roles = "Admin")]
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> UpdateProduct(int id, Product product)
+    public async Task<ActionResult> UpdateProduct(int id, [FromForm] Product product, IFormFile? file)
     {
         if (product.Id != id || !ProductExists(id))
         {
@@ -60,7 +83,54 @@ public class ProductsController(IUnitOfWork unit) : BaseApiController
 
         // unit.Repository<Product>().Entry(product).State = EntityState.Modified;
 
-        unit.Repository<Product>().Update(product);
+        var existingProduct = await unit.Repository<Product>().GetByIdAsync(id);
+        if (existingProduct == null)
+        {
+            return NotFound("Product not found");
+        }
+
+        if (file != null && file.Length > 0)
+        {
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var fileExtension = Path.GetExtension(file.FileName).ToLower();
+
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return BadRequest("Invalid file type. Allowed formats: jpg, jpeg, png.");
+            }
+
+            long maxFileSize = 2 * 1024 * 1024; // 2MB
+            if (file.Length > maxFileSize)
+            {
+                return BadRequest("File size exceeds the 2MB limit.");
+            }
+
+            string fileName = $"{Guid.NewGuid()}";
+            bool uploadSuccess = await FileUploaderOperations.UpdateFile(file, fileName, @"images/products", existingProduct.PictureUrl);
+
+            if (!uploadSuccess)
+            {
+                return BadRequest("File update failed.");
+            }
+            else
+            {
+                System.Console.WriteLine("-------------------------------------------------------------------");
+                System.Console.WriteLine("existingProduct.PictureUrl " + existingProduct.PictureUrl);
+                System.Console.WriteLine("-------------------------------------------------------------------");
+            }
+
+            existingProduct.PictureUrl = $"{fileName}{file.FileName}";
+        }
+
+        existingProduct.Name = product.Name;
+        existingProduct.Description = product.Description;
+        existingProduct.Price = product.Price;
+        existingProduct.Type = product.Type;
+        existingProduct.Brand = product.Brand;
+        existingProduct.QuantityInStock = product.QuantityInStock;
+
+
+        unit.Repository<Product>().Update(existingProduct);
 
         // await unit.Repository<Product>().SaveChangesAsync();
 
@@ -82,6 +152,20 @@ public class ProductsController(IUnitOfWork unit) : BaseApiController
 
         if (product == null)
             return NotFound();
+
+        if (product.PictureUrl != null)
+        {
+            bool deleteSuccess = await FileUploaderOperations.DeleteFile(product.PictureUrl, @"images/products");
+            if (!deleteSuccess)
+            {
+                return BadRequest("Problem deleting the product Image");
+            }
+
+        }
+        else
+        {
+            return BadRequest("product Image Not Found");
+        }
 
         unit.Repository<Product>().Remove(product);
 

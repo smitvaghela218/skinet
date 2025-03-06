@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AccountService } from '../../../core/services/account.service';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 import { TextInputComponent } from '../../../shared/components/text-input/text-input.component';
@@ -24,7 +24,7 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
     JsonPipe,
     MatError,
     TextInputComponent,
-    MatCheckbox
+    MatCheckbox,RouterLink
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

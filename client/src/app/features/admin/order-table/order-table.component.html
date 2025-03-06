@@ -1,0 +1,89 @@
+<!-- HEADER SECTION -->
+<div
+    class="flex items-center justify-between max-w-screen-2xl mx-auto bg-white pt-2 px-2 pb-1 rounded-lg shadow-md border">
+
+    <!-- Left Side: Title -->
+    <h2 class="text-2xl font-semibold text-gray-800">Orders</h2>
+
+    <!-- Right Side: Filter Dropdown -->
+    <mat-form-field appearance="outline" class="w-56">
+        <mat-label>Filter by status</mat-label>
+        <mat-select (selectionChange)="onOrderFilterSelect($event)">
+            @for (status of statusOptions; track $index) {
+            <mat-option [value]="status">{{ status }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+
+<!-- ORDER TABLE -->
+<div class="p-6">
+    <div class="mat-elevation-z8 rounded-lg overflow-hidden shadow-xl">
+        <table mat-table [dataSource]="orders" class="w-full bg-white">
+
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> No. </th>
+                <td mat-cell *matCellDef="let order"> {{ order.id }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="buyerEmail">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Buyer Email </th>
+                <td mat-cell *matCellDef="let order"> {{ order.buyerEmail }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orderDate">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Date </th>
+                <td mat-cell *matCellDef="let order"> {{ order.orderDate | date: 'short' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Total </th>
+                <td mat-cell *matCellDef="let order" class="font-semibold ">
+                    {{ order.total | currency: 'INR' }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Status </th>
+                <td mat-cell *matCellDef="let order">
+                    <span class="px-3 py-1 rounded-full text-white text-sm font-medium" [ngClass]="{
+                            'bg-yellow-500': order.status === 'Pending',
+                            'bg-green-600': order.status === 'PaymentReceived',
+                            'bg-red-600': order.status === 'PaymentFailed',
+                            'bg-orange-500': order.status === 'PaymentMismatch',
+                            'bg-gray-500': order.status === 'Refunded'
+                        }">
+                        {{ getStatusLabel(order.status) }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Actions </th>
+                <td mat-cell *matCellDef="let order">
+                    <div class="flex gap-2">
+                        <button matTooltip="Delete" mat-icon-button
+                            class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-md"
+                            (click)="opendeleteOrderDialog(order.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button matTooltip="Refund" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-md"
+                            [disabled]="order.status === 'Refunded'" (click)="openRefundOrderDialog(order.id)">
+                            <mat-icon>undo</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="orderColumns" class="bg-gray-100"></tr>
+            <tr mat-row *matRowDef="let row; columns: orderColumns;"></tr>
+        </table>
+
+        <!-- PAGINATION -->
+        <mat-paginator class="bg-white p-2" [pageSizeOptions]="[5, 10, 20]" [length]="ordersCount"
+            [pageSize]="orderParams.pageSize" (page)="onOrderPageChange($event)" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>

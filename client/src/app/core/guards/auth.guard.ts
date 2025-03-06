@@ -2,9 +2,12 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AccountService } from '../services/account.service';
 import { map, of } from 'rxjs';
+import { SnackbarService } from '../services/snackbar.service';
+
 
 export const authGuard: CanActivateFn = (route, state) => {
   const accountService = inject(AccountService);
+  const snackbarService = inject(SnackbarService);
   const router = inject(Router);
   // console.log('accountService.currentUser() ' + accountService.currentUser());
   if (accountService.currentUser()) {
@@ -16,6 +19,7 @@ export const authGuard: CanActivateFn = (route, state) => {
           return true
         } else {
           router.navigate(['/account/login'], { queryParams: { returnUrl: state.url } });
+          snackbarService.error('Login Required');
           return false;
         }
       })

@@ -1,27 +1,39 @@
-<div class="mx-auto mt-32">
-    <h2 class="font-semibold text-2xl mb-6 text-center">My orders</h2>
-    <div class="flex flex-col">
-        <div class="w-full">
-            <table class="min-w-full divide-y divide-gray-200 cursor-pointer">
-                <thead class="bg-gray-50">
-                    <tr class="uppercase text-gray-600 text-sm">
-                        <th class="text-center px-6 py-3">Order</th>
-                        <th class="text-left">Date</th>
-                        <th class="text-left">Total</th>
-                        <th class="text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @for (order of orders; track order.id) {
-                    <tr routerLink="/orders/{{order.id}}" class="hover:bg-gray-100">
-                        <th class="px-6 py-3"># {{order.id}}</th>
-                        <td>{{order.orderDate | date: 'medium'}}</td>
-                        <td>{{order.total | currency : 'INR'}}</td>
-                        <td>{{order.status}}</td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+@if (orders) {
+<div class="mx-auto mt-24 max-w-7xl bg-white shadow-xl rounded-xl p-8 border border-gray-200">
+    <h2 class="font-semibold text-3xl mb-8 text-center text-gray-900">My Orders</h2>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-300 rounded-lg shadow-md">
+            <thead class="bg-[#7d00fa] text-white uppercase text-sm tracking-wider">
+                <tr>
+                    <th class="px-6 py-4 text-center">Order</th>
+                    <th class="text-left px-6 py-4">Date</th>
+                    <th class="text-left px-6 py-4">Total</th>
+                    <th class="text-left px-6 py-4">Status</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-gray-50">
+                @for (order of orders; track order.id) {
+                <tr routerLink="/orders/{{order.id}}"
+                    class="hover:bg-[#f4ebff] transition duration-200 even:bg-gray-100">
+                    <th class="px-6 py-4 text-center font-medium text-gray-900">#{{order.id}}</th>
+                    <td class="px-6 py-4 text-gray-700">{{order.orderDate | date: 'medium'}}</td>
+                    <td class="px-6 py-4 font-semibold text-[#7d00fa]">{{order.total | currency : 'INR'}}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 text-sm font-semibold rounded-lg" [ngClass]="{
+                            'bg-yellow-500': order.status === 'Pending',
+                            'bg-green-600': order.status === 'PaymentReceived',
+                            'bg-red-600': order.status === 'PaymentFailed',
+                            'bg-orange-500': order.status === 'PaymentMismatch',
+                            'bg-gray-500': order.status === 'Refunded'
+                              }">
+                            {{order.status}}
+                        </span>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
+}

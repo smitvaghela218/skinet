@@ -1,17 +1,21 @@
-<mat-card class="max-w-lg mx-auto mt-32 p-8 bg-white">
+<mat-card class="max-w-lg mx-auto mt-20 p-8 bg-white shadow-lg rounded-lg border border-gray-200">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
+        <!-- Title -->
         <div class="text-center mb-6">
-            <h1 class="text-3xl font-semibold text-primary">Register</h1>
+            <h1 class="text-3xl font-semibold text-[#4A00E0]">Create an Account</h1>
+            <p class="text-gray-600 text-sm">Join us today! It only takes a few steps.</p>
         </div>
 
-        <app-text-input label="First name" formControlName="firstName" />
-        <app-text-input label="Last name" formControlName="lastName" />
-        <app-text-input label="Email address" formControlName="email" />
+        <!-- Input Fields -->
+        <app-text-input label="First Name" formControlName="firstName" />
+        <app-text-input label="Last Name" formControlName="lastName" />
+        <app-text-input label="Email Address" formControlName="email" />
         <app-text-input label="Password" formControlName="password" [type]="showPassword ? 'text' : 'password'" />
 
+        <!-- Error Messages -->
         @if (validationErrors) {
-        <div class="mb-3 p-4 bg-red-100 text-red-600">
+        <div class="mb-3 p-4 bg-red-100 text-red-600 rounded-lg">
             <ul class="list-disc px-3">
                 @for (error of validationErrors; track $index) {
                 <li>{{error}}</li>
@@ -19,11 +23,20 @@
             </ul>
         </div>
         }
-        <!-- <mat-checkbox class="mb-1" [checked]="showPassword" (change)="onShowPasswordCheckboxChange($event)">
-            Show Password
-        </mat-checkbox> -->
 
-        <button [disabled]="registerForm.invalid" mat-flat-button type="submit" class="w-full py-2">Register</button>
+        <!-- Register Button -->
+        <!-- <button [disabled]="registerForm.invalid" mat-flat-button type="submit"
+            class="w-full bg-[#4A00E0] hover:bg-[#3700b3] text-white font-semibold py-3 rounded-lg transition">
+            Register
+        </button> --> <button [disabled]="registerForm.invalid" mat-flat-button type="submit"
+            class="w-full py-2">Register</button>
+
+
+        <!-- Extra Text
+        <p class="text-center text-gray-500 mt-4 text-sm">
+            Already have an account?
+            <a routerLink="/account/login" class="text-[#4A00E0] hover:underline">Sign in here</a>
+        </p> -->
 
     </form>
 </mat-card>

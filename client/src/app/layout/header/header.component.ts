@@ -10,6 +10,7 @@ import { AccountService } from '../../core/services/account.service';
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatDivider } from '@angular/material/divider';
 import { IsAdminDirective } from '../../shared/directives/is-admin.directive';
+import { SidebarService } from '../../core/services/sidebar.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -31,6 +32,7 @@ import { IsAdminDirective } from '../../shared/directives/is-admin.directive';
 })
 
 export class HeaderComponent {
+  sidebarService = inject(SidebarService);
   busyService = inject(BusyService)
   cartService = inject(CartService)
   accountService = inject(AccountService)
@@ -45,4 +47,8 @@ export class HeaderComponent {
     })
   }
 
+  toggleAdminSidebar() {
+    console.log("toggleAdminSidebar call");
+    this.sidebarService.toggleSidebar(); // Call function to show/hide sidebar
+  }
 }

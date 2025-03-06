@@ -3,11 +3,11 @@ import { OrderService } from '../../core/services/order.service';
 import { Order } from '../../shared/models/order';
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [RouterLink, DatePipe, CurrencyPipe],
+  imports: [RouterLink, DatePipe, CurrencyPipe,CommonModule],
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
 })

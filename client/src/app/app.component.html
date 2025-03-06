@@ -1,5 +1,37 @@
 <app-header></app-header>
+@if (isSidebarVisible) {
+<div class="grid grid-cols-12">
+    <!-- Sidebar (2 columns) -->
+    <div class="col-span-2  text-white min-h-screen">
+        <app-sidebar></app-sidebar>
+    </div>
 
-<div class=" mt-24">
+    <!-- Main Content (10 columns) -->
+    <div class="col-span-10 mt-24 p-4">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+}
+@else{
+<div class="mt-24">
     <router-outlet></router-outlet>
 </div>
+}
+
+
+<!-- <app-header></app-header> -->
+<!-- <div class="mt-24 flex transition-all duration-300"> -->
+<!-- Sidebar (col-2) -->
+<!-- <div [ngIf]="isSidebarVisible"
+        [ngClass]="{ 'w-1/6': sidebarService.isAdminSidebarVisible(), 'w-0': !sidebarService.isAdminSidebarVisible() }"
+        class="transition-all duration-300 overflow-hidden">
+        <app-sidebar *appIsAdminSidebarVisible></app-sidebar>
+    </div> -->
+
+<!-- Main content area (col-10) -->
+<!-- <div [ngClass]="{ 'w-5/6': sidebarService.isAdminSidebarVisible(), 'w-full': !sidebarService.isAdminSidebarVisible() }"
+        class="transition-all duration-300">
+        <router-outlet></router-outlet>
+    </div>
+</div> -->

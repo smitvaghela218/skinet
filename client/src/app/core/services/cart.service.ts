@@ -42,6 +42,7 @@ export class CartService {
     return this.http.get<Cart>(this.baseUrl + 'cart?id=' + id).pipe(
       map(cart => {
         this.cart.set(cart);
+        console.log(cart);
         return cart;
       })
     )
@@ -49,7 +50,11 @@ export class CartService {
 
   setCart(cart: Cart) {
     return this.http.post<Cart>(this.baseUrl + 'cart', cart).subscribe({
-      next: cart => this.cart.set(cart)
+      next: cart => {
+        this.cart.set(cart)
+        console.log(cart);
+
+      }
     })
   }
 

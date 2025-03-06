@@ -14,12 +14,15 @@ public class StoreContextSeed
         {
             var user = new AppUser
             {
+                FirstName = "skinet",
+                LastName = "admin",
                 UserName = "admin@test.com",
                 Email = "admin@test.com",
             };
 
             await userManager.CreateAsync(user, "Smit@218");
             await userManager.AddToRoleAsync(user, "Admin");
+            // await userManager.AddToRoleAsync(user, "Customer");
         }
 
         var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); //give the location of dll file of Infrastructure

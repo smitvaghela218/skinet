@@ -23,6 +23,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }
 );
+builder.Services.AddCoreAdmin();
 builder.Services.AddCors();
 builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
 {

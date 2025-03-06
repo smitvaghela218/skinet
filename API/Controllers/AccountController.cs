@@ -22,6 +22,7 @@ namespace API.Controllers
             };
 
             var result = await signInManager.UserManager.CreateAsync(user, registerDto.Password);
+
             // foreach (var claim in User.Claims)
             // {
             //     Console.WriteLine($"Key: {claim.Type}, Value: {claim.Value}");
@@ -34,6 +35,10 @@ namespace API.Controllers
                     ModelState.AddModelError(error.Code, error.Description);
                 }
                 return ValidationProblem();
+            }
+            else
+            {
+                await signInManager.UserManager.AddToRoleAsync(user, "Customer");
             }
 
             return Ok();
@@ -68,6 +73,7 @@ namespace API.Controllers
 
             return Ok(new
             {
+                user.Id,
                 user.FirstName,
                 user.LastName,
                 user.Email,

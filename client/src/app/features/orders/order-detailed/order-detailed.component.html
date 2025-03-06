@@ -1,94 +1,106 @@
 @if (order) {
-<mat-card class="bg-white py-8 shadow-md max-w-screen-lg mx-auto mb-5">
-    <div class="px-4 w-full">
-        <div class="flex justify-between items-center align-middle">
-            <h2 class="text-2xl text-center font-semibold">Order summary for order #{{order.id}}</h2>
-            <button routerLink="/orders" mat-stroked-button>Return to orders</button>
-        </div>
-        <div class="mt-8 py-3 border-t border-gray-200 flex gap-16">
-            <div class="space-y-2">
-                <h4 class="text-lg font-semibold">Billing and delivery information</h4>
-                <dl>
-                    <dt class="font-medium">Shipping address</dt>
-                    <dd class="mt-1 font-light">{{order.shippingAddress | address}}</dd>
-                </dl>
-                <dl>
-                    <dt class="font-medium">Payment info</dt>
-                    <dd class="mt-1 font-light">{{order.paymentSummary | paymentCard}}</dd>
-                </dl>
-            </div>
-            <div class="space-y-2">
-                <h4 class="text-lg font-semibold">Order details</h4>
-                <dl>
-                    <dt class="font-medium">Email address</dt>
-                    <dd class="mt-1 font-light">{{order.buyerEmail}}</dd>
-                </dl>
-                <dl>
-                    <dt class="font-medium">Order status</dt>
-                    <dd class="mt-1 font-light">{{order.status}}</dd>
-                </dl>
-                <dl>
-                    <dt class="font-medium">Order date</dt>
-                    <dd class="mt-1 font-light">{{order.orderDate | date: 'medium'}}</dd>
-                </dl>
-            </div>
+<mat-card class="bg-white py-10 px-8 shadow-lg max-w-screen-lg mx-auto mb-8 rounded-2xl border border-gray-200">
+    <div class="w-full">
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b pb-4 mb-6">
+            <h2 class="text-3xl font-bold text-gray-900">Order #{{order.id}}</h2>
+            <button routerLink="/orders" mat-stroked-button
+                class="border-[#7d00fa] text-[#7d00fa] hover:bg-[#7d00fa] hover:text-white transition duration-300 px-4 py-2 rounded-lg shadow-md">
+                ← Return to Orders
+            </button>
         </div>
 
-        <div class="mt-4">
-            <div class="border-y border-gray-200">
-                <table class="w-full text-center">
-                    <tbody class="divide-y divide-gray-200">
-                        @for (item of order.orderItems; track item.productId) {
-                        <tr>
-                            <td class="py-4">
-                                <div class="flex items-center gap-4">
-                                    <img src="{{item.pictureUrl}}" alt="product image" class="w-10 h-10">
-                                    <span>{{item.productName}}</span>
-                                </div>
-                            </td>
-                            <td class="p-4">x{{item.quantity}}</td>
-                            <td class="p-4 text-right">{{item.price | currency : 'INR'}}</td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="space-y-4 rounded-lg border-y border-gray-200 p-4 bg-white">
-            <p class="text-xl font-semibold">Order summary</p>
+        <!-- Order Information -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border-b pb-6">
             <div class="space-y-4">
-                <div class="space-y-2">
-                    <dl class="flex items-center justify-between gap-4">
-                        <dt class="font-medium text-gray-500">Subtotal</dt>
-                        <dd class="font-medium text-gray-900">
-                            {{order.subtotal | currency : 'INR'}}
-                        </dd>
-                    </dl>
-                    <dl class="flex items-center justify-between gap-4">
-                        <dt class="font-medium text-gray-500">Discount</dt>
-                        <dd class="font-medium text-green-500">
-                            -₹0.00
-                        </dd>
-                    </dl>
-                    <dl class="flex items-center justify-between gap-4">
-                        <dt class="font-medium text-gray-500">Delivery fee</dt>
-                        <dd class="font-medium text-gray-900">
-                            {{order.shippingPrice| currency : 'INR'}}
-                        </dd>
-                    </dl>
-                </div>
-
-                <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
-                    <dt class="font-medium text-gray-500">Total</dt>
-                    <dd class="font-medium text-gray-900">
-                        {{order.total | currency : 'INR'}}
+                <h4 class="text-xl font-semibold text-gray-800">Billing & Delivery Info</h4>
+                <dl>
+                    <dt class="font-medium text-gray-600">Shipping Address</dt>
+                    <dd class="mt-1 text-gray-700">{{order.shippingAddress | address}}</dd>
+                </dl>
+                <dl>
+                    <dt class="font-medium text-gray-600">Payment Info</dt>
+                    <dd class="mt-1 text-gray-700">{{order.paymentSummary | paymentCard}}</dd>
+                </dl>
+            </div>
+            <div class="space-y-4">
+                <h4 class="text-xl font-semibold text-gray-800">Order Details</h4>
+                <dl>
+                    <dt class="font-medium text-gray-600">Email Address</dt>
+                    <dd class="mt-1 text-gray-700">{{order.buyerEmail}}</dd>
+                </dl>
+                <dl>
+                    <dt class="font-medium text-gray-600">Order Status</dt>
+                    <dd class="mt-1">
+                        <span class="px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition duration-300"
+                            [ngClass]="{
+                                'bg-yellow-500 text-black': order.status === 'Pending',
+                                'bg-green-600 text-white': order.status === 'PaymentReceived',
+                                'bg-red-600 text-white': order.status === 'PaymentFailed',
+                                'bg-orange-500 text-white': order.status === 'PaymentMismatch',
+                                'bg-gray-500 text-white': order.status === 'Refunded'
+                            }">
+                            {{ order.status }}
+                        </span>
                     </dd>
                 </dl>
-            </div>
 
+                <dl>
+                    <dt class="font-medium text-gray-600">Order Date</dt>
+                    <dd class="mt-1 text-gray-700">{{order.orderDate | date: 'medium'}}</dd>
+                </dl>
+            </div>
         </div>
 
+        <!-- Order Items -->
+        <div class="mt-8">
+            <table class="w-full text-center border border-gray-300 rounded-lg shadow-lg overflow-hidden">
+                <thead class="bg-[#7d00fa] text-white text-sm uppercase">
+                    <tr>
+                        <th class="p-4 text-left">Product</th>
+                        <th class="p-4">Quantity</th>
+                        <th class="p-4 text-right">Price</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-gray-50">
+                    @for (item of order.orderItems; track item.productId) {
+                    <tr class="hover:bg-gray-100 transition duration-300">
+                        <td class="py-4 flex items-center gap-4 text-left px-6">
+                            <img src="/images/products/{{item.pictureUrl}}" alt="product image"
+                                class="w-14 h-14 rounded-lg border border-gray-300 shadow">
+                            <span class="text-gray-800 font-medium">{{item.productName}}</span>
+                        </td>
+                        <td class="p-4 text-gray-700">x{{item.quantity}}</td>
+                        <td class="p-4 text-right font-semibold text-gray-900">{{item.price | currency : 'INR'}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="mt-8 p-6 rounded-2xl border border-gray-300 bg-gray-50 shadow-md">
+            <p class="text-2xl font-semibold text-gray-800 mb-4">Order Summary</p>
+            <div class="space-y-4">
+                <dl class="flex items-center justify-between gap-4">
+                    <dt class="font-medium text-gray-600">Subtotal</dt>
+                    <dd class="font-medium text-gray-900">{{order.subtotal | currency : 'INR'}}</dd>
+                </dl>
+                <dl class="flex items-center justify-between gap-4">
+                    <dt class="font-medium text-gray-600">Discount</dt>
+                    <dd class="font-medium text-green-600">-₹0.00</dd>
+                </dl>
+                <dl class="flex items-center justify-between gap-4">
+                    <dt class="font-medium text-gray-600">Delivery Fee</dt>
+                    <dd class="font-medium text-gray-900">{{order.shippingPrice | currency : 'INR'}}</dd>
+                </dl>
+
+                <dl class="flex items-center justify-between gap-4 border-t border-gray-300 pt-4">
+                    <dt class="text-xl font-semibold text-gray-800">Total</dt>
+                    <dd class="text-xl font-semibold text-gray-900">{{order.total | currency : 'INR'}}</dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </mat-card>
 }

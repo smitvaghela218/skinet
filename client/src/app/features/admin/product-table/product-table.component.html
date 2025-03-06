@@ -1,0 +1,78 @@
+<!-- HEADER SECTION -->
+<div class="flex items-center justify-between max-w-screen-2xl mx-auto bg-white p-4 rounded-lg shadow-md border">
+
+    <!-- Left Side: Title -->
+    <h2 class="text-2xl font-semibold text-gray-800">Skinet Products</h2>
+
+    <!-- Right Side: Add Product Button -->
+    <button routerLink="/admin/product"
+        class="bg-blue-600 text-white px-4 py-2 text-sm font-medium rounded-md shadow hover:bg-blue-700 transition">
+        + Add Product
+    </button>
+</div>
+
+
+<!-- TABLE SECTION -->
+<div class="p-6">
+    <div class="mat-elevation-z8 rounded-lg overflow-hidden shadow-xl">
+        <table mat-table [dataSource]="products" class="w-full bg-white">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700"> No. </th>
+                <td mat-cell *matCellDef="let product" class="text-gray-800"> {{product.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700"> Name </th>
+                <td mat-cell *matCellDef="let product" class="text-gray-900 font-medium"> {{product.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700"> Type </th>
+                <td mat-cell *matCellDef="let product"> {{product.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="brand">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700"> Brand </th>
+                <td mat-cell *matCellDef="let product"> {{product.brand}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef class="text-gray-700"> Price </th>
+                <td mat-cell *matCellDef="let product" class="font-semibold">
+                    {{product.price | currency:'INR' }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="text-left"> Actions </th>
+                <td mat-cell *matCellDef="let product">
+                    <div class="flex gap-2">
+                        <!-- DELETE BUTTON -->
+                        <button matTooltip="Delete" mat-icon-button
+                            class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-md transition"
+                            (click)="opendeleteProductDialog(product.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                        <!-- EDIT BUTTON -->
+                        <button matTooltip="Edit" mat-icon-button
+                            class="bg-teal-600 hover:bg-teal-700 text-white p-2 rounded-md transition"
+                            [routerLink]="['/admin/product', product.id]">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="productColumns" class="bg-[#f3f4f6]"></tr>
+            <tr mat-row *matRowDef="let row; columns: productColumns;"></tr>
+        </table>
+
+        <!-- PAGINATION -->
+        <mat-paginator class="bg-white p-2 rounded-b-lg shadow-md" [pageSizeOptions]="[5, 10, 20]"
+            [length]="productsCount" [pageSize]="productParams.pageSize" (page)="onProductPageChange($event)"
+            showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>

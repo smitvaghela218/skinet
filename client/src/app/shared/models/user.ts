@@ -1,9 +1,10 @@
 export type User = {
+    id: string;
     firstName: string;
     lastName: string;
     email: string;
     address: Address;
-    roles: string | string[];
+    roles: string;
 }
 export type Address = {
     line1: string;

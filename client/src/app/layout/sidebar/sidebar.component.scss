@@ -1,0 +1,22 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 60px; /* To not overlap header */
+    background: #f8f9fa;
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  .sidebar ul li:hover {
+    background: #e9ecef;
+  }
+  

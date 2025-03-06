@@ -1,0 +1,129 @@
+<mat-card class="max-w-2xl mx-auto  p-6 bg-white w-full mb-5">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-semibold text-primary">Add Product</h1>
+        </div>
+
+        <!-- Product Name -->
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Product Name</mat-label>
+            <input formControlName="name" type="text" matInput />
+            @if(productForm.get('name')?.hasError('required'))
+            {
+            <mat-error>Product Name is required</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="description" matInput rows="3"></textarea>
+            @if(productForm.get('description')?.hasError('required'))
+            {
+            <mat-error>Description is required</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Price -->
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Price</mat-label>
+            <input formControlName="price" type="number" matInput />
+            @if(productForm.get('price')?.hasError('required'))
+            {
+            <mat-error>Price is required</mat-error>
+            }
+            @if(productForm.get('price')?.hasError('min'))
+            {
+            <mat-error>Price must be > 0</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Picture URL
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Picture URL</mat-label>
+            <input formControlName="pictureUrl" type="text" matInput />
+            @if(productForm.get('pictureUrl')?.hasError('required'))
+            {
+            <mat-error>Picture URL is required</mat-error>
+            }
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Picture URL</mat-label>
+            <input formControlName="pictureUrl" type="text" matInput />
+            @if(productForm.get('pictureUrl')?.hasError('required'))
+            {
+            <mat-error>Picture URL is required</mat-error>
+            }
+        </mat-form-field>
+        <br> -->
+        <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">
+            Product Image
+        </label>
+        <input type="file" id="file_input" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white 
+                   focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" (change)="onChange($event)"
+            (blur)="validateFile()" accept="image/png, image/jpeg, image/jpg" />
+        <p class="mt-1 text-sm text-gray-500" id="file_input_help">
+            SVG, PNG, JPG or GIF (MAX. 800x400px).
+        </p>
+        <div>
+            <mat-error *ngIf="fileError">{{ fileError }}</mat-error>
+        </div>
+
+
+        <br>
+
+
+        <!-- <div *ngIf="file.length" class="file-section">
+            <section *ngFor="let file of file">
+                File details:
+                <ul>
+                    <li>Name: {{file.name}}</li>
+                    <li>Type: {{file.type}}</li>
+                    <li>Size: {{file.size}} bytes</li>
+                </ul>
+            </section>
+        </div>
+        <br> -->
+
+        <!-- Type -->
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Type</mat-label>
+            <input formControlName="type" type="text" matInput />
+            @if(productForm.get('type')?.hasError('required'))
+            {
+            <mat-error>Type is required</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Brand -->
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Brand</mat-label>
+            <input formControlName="brand" type="text" matInput />
+            @if(productForm.get('brand')?.hasError('required'))
+            {
+            <mat-error>Brand is required</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Quantity in Stock -->
+        <mat-form-field appearance="outline" class="w-full mb-4">
+            <mat-label>Quantity in Stock</mat-label>
+            <input formControlName="quantityInStock" type="number" matInput />
+            @if(productForm.get('quantityInStock')?.hasError('required'))
+            {
+            <mat-error>Quantity in Stock is required</mat-error>
+            }
+            @if(productForm.get('quantityInStock')?.hasError('min'))
+            {
+            <mat-error>Quantity in Stock must be > 1</mat-error>
+            }
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <button [disabled]="productForm.invalid" mat-flat-button color="primary" type="submit" class="w-full py-2">
+            Add Product
+        </button>
+
+    </form>
+</mat-card>

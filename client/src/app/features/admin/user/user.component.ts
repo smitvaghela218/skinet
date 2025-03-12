@@ -134,13 +134,13 @@ export class UserComponent {
 
 
 
-  // rolesOptions = ['All', 'Admin', 'Customer'];
-  // userColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'action'];
-  // users = new MatTableDataSource<User>([]);
+  rolesOptions = ['All', 'Admin', 'Customer'];
+  userColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'action'];
+  users = new MatTableDataSource<User>([]);
   private adminService = inject(AdminService);
   private dialogService = inject(DialogService);
-  // userParams = new UserParams();
-  // usersCount = 0;
+  userParams = new UserParams();
+  usersCount = 0;
   private snack = inject(SnackbarService);
 
   ngOnInit(): void {
@@ -148,11 +148,11 @@ export class UserComponent {
   }
 
   loadUsers() {
-    this.adminService.getUsers().subscribe({
+    this.adminService.getUsers(this.userParams).subscribe({
       next: response => {
-        if (response) {
+        if (response.data) {
           // this.users.data = response.data;
-          this.rowData = response;
+          this.rowData = response.data;
           console.log(this.rowData);
 
           // this.usersCount = response.count;

@@ -62,39 +62,8 @@ namespace API.Controllers
             return BadRequest("Problem refunding order");
         }
 
-        // [HttpGet("users")]
-        //         public async Task<ActionResult<Pagination<UserDto>>> GetUsers([FromQuery] UserSpecParams specParams)
-        //         {
-        //             var users = userManager.Users.OrderBy(o => o.Email).ToList();
-        //             var userList = new List<UserDto>();
-
-        //             foreach (var user in users)
-        //             {
-        //                 var roles = await userManager.GetRolesAsync(user); // Fetch roles separately
-        //                 if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
-        //                 {
-        //                     userList.Add(new UserDto
-        //                     {
-        //                         Id = user.Id,
-        //                         FirstName = user.FirstName,
-        //                         LastName = user.LastName,
-        //                         Email = user.Email,
-        //                         Address = user.Address?.ToDto(), // Avoid null reference
-        //                         Roles = roles.ToList()[0] // Convert roles to list
-        //                     });
-        //                 }
-        //             }
-
-        //             var totalCount = userList.Count;
-
-        //             var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
-        //                 .Take(specParams.PageSize).ToList());
-
-        //             return Ok(pagination);
-        //         }
-
-        [HttpGet("userslist")]
-        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        [HttpGet("users")]
+        public async Task<ActionResult<Pagination<UserDto>>> GetUsers([FromQuery] UserSpecParams specParams)
         {
             var users = userManager.Users.OrderBy(o => o.Email).ToList();
             var userList = new List<UserDto>();
@@ -102,7 +71,7 @@ namespace API.Controllers
             foreach (var user in users)
             {
                 var roles = await userManager.GetRolesAsync(user); // Fetch roles separately
-                // if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
+                if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
                 {
                     userList.Add(new UserDto
                     {
@@ -116,14 +85,12 @@ namespace API.Controllers
                 }
             }
 
-            // var totalCount = userList.Count;
+            var totalCount = userList.Count;
 
-            // var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
-            //     .Take(specParams.PageSize).ToList());
-            // System.Console.WriteLine("-------------------------------------------------------------------------");
-            // System.Console.WriteLine(userList);
-            // System.Console.WriteLine("-------------------------------------------------------------------------");
-            return Ok(userList);
+            var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
+                .Take(specParams.PageSize).ToList());
+
+            return Ok(pagination);
         }
 
         [HttpDelete("users/{id}")]

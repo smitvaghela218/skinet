@@ -148,30 +148,28 @@ export class UserTableComponent implements OnInit {
   }
 
   loadUsers() {
-    this.adminService.getUsers().subscribe({
+    this.adminService.getUsers(this.userParams).subscribe({
       next: response => {
-        if (response) {
-          // this.users.data = response.data;
-          this.rowData = response;
-          console.log(this.rowData);
-
-          // this.usersCount = response.count;
+        if (response.data) {
+          this.users.data = response.data;
+          this.rowData = response.data;
+          this.usersCount = response.count;
         }
       }
     })
   }
 
-  // onUserPageChange(event: PageEvent) {
-  //   this.userParams.pageNumber = event.pageIndex + 1;
-  //   this.userParams.pageSize = event.pageSize;
-  //   this.loadUsers();
-  // }
+  onUserPageChange(event: PageEvent) {
+    this.userParams.pageNumber = event.pageIndex + 1;
+    this.userParams.pageSize = event.pageSize;
+    this.loadUsers();
+  }
 
-  // onUserFilterSelect(event: MatSelectChange) {
-  //   this.userParams.role = event.value;
-  //   this.userParams.pageNumber = 1;
-  //   this.loadUsers();
-  // }
+  onUserFilterSelect(event: MatSelectChange) {
+    this.userParams.role = event.value;
+    this.userParams.pageNumber = 1;
+    this.loadUsers();
+  }
 
   async opendeleteUserDialog(id: string) {
     const confirmed = await this.dialogService.confirm(

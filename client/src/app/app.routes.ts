@@ -49,7 +49,7 @@ export const routes: Routes = [
     { path: 'admin/product/:id', component: EditProductComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/user-table', component: UserTableComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/user', component: AddUserComponent, canActivate: [authGuard, adminGuard] },
-    { path: 'user', component: UserComponent, },
+    // { path: 'user', component: UserComponent, },
     { path: 'admin/user/:id', component: EditUserComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/order-table', component: OrderTableComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard, adminGuard] },

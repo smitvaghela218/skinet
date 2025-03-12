@@ -111,7 +111,7 @@ namespace API.Controllers
                         LastName = user.LastName,
                         Email = user.Email,
                         Address = user.Address?.ToDto(), // Avoid null reference
-                        Roles = roles.ToList()[0] ?? null// Convert roles to list
+                        Roles = roles.Count > 0 ? roles.ToList()[0] : null// Convert roles to list
                     });
                 }
             }

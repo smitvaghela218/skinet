@@ -18,15 +18,15 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   template: `
   <div style="height: 50vh; display: flex; flex-direction: column;">
     <ag-grid-angular
-      [pagination]="true"
-      [paginationPageSize]="paginationPageSize"
-      [paginationPageSizeSelector]="paginationPageSizeSelector"
       #agGrid
       style="flex: 1; width: 100%;"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [defaultColDef]="defaultColDef"
-      [rowSelection]="rowSelection"
+      [rowSelection]="rowSelection" 
+      [pagination]="true"
+      [paginationPageSize]="paginationPageSize"
+      [paginationPageSizeSelector]="paginationPageSizeSelector"
     ></ag-grid-angular>
   </div>
 `,
@@ -115,6 +115,6 @@ export class TestGridComponent {
   };
 
   rowSelection: RowSelectionOptions | 'single' | 'multiple' = 'multiple';
-  paginationPageSize = 2;
-  paginationPageSizeSelector = [2, 3, 4];
+  paginationPageSize = 1;
+  paginationPageSizeSelector = [1, 2, 3];
 }

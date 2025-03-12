@@ -28,7 +28,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 
 @Component({
-  selector: 'app-user-table',
+  selector: 'app-user',
   standalone: true,
   imports: [
     MatTableModule,
@@ -89,7 +89,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   </div>
 `,
 })
-export class UserTableComponent implements OnInit {
+export class UserComponent {
   router = inject(Router);
   rowData: User[] = []
   columnDefs: ColDef[] = [

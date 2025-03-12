@@ -86,7 +86,7 @@ export class AdminComponent implements OnInit {
   }
 
   loadUsers() {
-    this.adminService.getUsers(this.userParams).subscribe({
+    this.adminService.getUsers().subscribe({
       next: response => {
         // if (response.data) {
         //   this.users.data = response.data;

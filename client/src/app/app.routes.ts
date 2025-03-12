@@ -26,6 +26,7 @@ import { ProductTableComponent } from './features/admin/product-table/product-ta
 import { UserTableComponent } from './features/admin/user-table/user-table.component';
 import { OrderTableComponent } from './features/admin/order-table/order-table.component';
 import { TestGridComponent } from './test-grid/test-grid.component';
+import { UserComponent } from './features/admin/user/user.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -48,6 +49,7 @@ export const routes: Routes = [
     { path: 'admin/product/:id', component: EditProductComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/user-table', component: UserTableComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/user', component: AddUserComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'user', component: UserComponent, },
     { path: 'admin/user/:id', component: EditUserComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/order-table', component: OrderTableComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard, adminGuard] },

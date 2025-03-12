@@ -62,6 +62,37 @@ namespace API.Controllers
             return BadRequest("Problem refunding order");
         }
 
+        // [HttpGet("users")]
+        //         public async Task<ActionResult<Pagination<UserDto>>> GetUsers([FromQuery] UserSpecParams specParams)
+        //         {
+        //             var users = userManager.Users.OrderBy(o => o.Email).ToList();
+        //             var userList = new List<UserDto>();
+
+        //             foreach (var user in users)
+        //             {
+        //                 var roles = await userManager.GetRolesAsync(user); // Fetch roles separately
+        //                 if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
+        //                 {
+        //                     userList.Add(new UserDto
+        //                     {
+        //                         Id = user.Id,
+        //                         FirstName = user.FirstName,
+        //                         LastName = user.LastName,
+        //                         Email = user.Email,
+        //                         Address = user.Address?.ToDto(), // Avoid null reference
+        //                         Roles = roles.ToList()[0] // Convert roles to list
+        //                     });
+        //                 }
+        //             }
+
+        //             var totalCount = userList.Count;
+
+        //             var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
+        //                 .Take(specParams.PageSize).ToList());
+
+        //             return Ok(pagination);
+        //         }
+
         [HttpGet("users")]
         public async Task<ActionResult<List<UserDto>>> GetUsers()
         {

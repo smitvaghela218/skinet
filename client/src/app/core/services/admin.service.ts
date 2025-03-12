@@ -80,7 +80,7 @@ export class AdminService {
     return this.http.get<Pagination<Product>>(this.baseUrl + 'products', { params });
   }
 
-  getUsers(userParams: UserParams) {
+  getUsers() {
     // let params = new HttpParams();
     // params = params.append('pageIndex', userParams.pageNumber);
     // params = params.append('pageSize', userParams.pageSize);

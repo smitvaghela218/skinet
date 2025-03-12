@@ -93,7 +93,7 @@ namespace API.Controllers
         //             return Ok(pagination);
         //         }
 
-        [HttpGet("users")]
+        [HttpGet("userslist")]
         public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
             var users = userManager.Users.OrderBy(o => o.Email).ToList();

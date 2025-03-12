@@ -85,6 +85,6 @@ export class AdminService {
     // params = params.append('pageIndex', userParams.pageNumber);
     // params = params.append('pageSize', userParams.pageSize);
     // params = params.append('role', userParams.role);
-    return this.http.get<User[]>(this.baseUrl + 'admin/users');
+    return this.http.get<User[]>(this.baseUrl + 'admin/userslist');
   }
 }

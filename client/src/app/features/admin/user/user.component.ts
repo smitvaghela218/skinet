@@ -134,9 +134,9 @@ export class UserComponent {
 
 
 
-  rolesOptions = ['All', 'Admin', 'Customer'];
-  userColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'action'];
-  users = new MatTableDataSource<User>([]);
+  // rolesOptions = ['All', 'Admin', 'Customer'];
+  // userColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'roles', 'action'];
+  // users = new MatTableDataSource<User>([]);
   private adminService = inject(AdminService);
   private dialogService = inject(DialogService);
   userParams = new UserParams();

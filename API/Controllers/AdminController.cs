@@ -63,7 +63,7 @@ namespace API.Controllers
         }
 
         [HttpGet("users")]
-        public async Task<ActionResult<Pagination<UserDto>>> GetUsers([FromQuery] UserSpecParams specParams)
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
             var users = userManager.Users.OrderBy(o => o.Email).ToList();
             var userList = new List<UserDto>();
@@ -71,7 +71,7 @@ namespace API.Controllers
             foreach (var user in users)
             {
                 var roles = await userManager.GetRolesAsync(user); // Fetch roles separately
-                if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
+                // if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
                 {
                     userList.Add(new UserDto
                     {
@@ -85,12 +85,14 @@ namespace API.Controllers
                 }
             }
 
-            var totalCount = userList.Count;
+            // var totalCount = userList.Count;
 
-            var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
-                .Take(specParams.PageSize).ToList());
-
-            return Ok(pagination);
+            // var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
+            //     .Take(specParams.PageSize).ToList());
+            // System.Console.WriteLine("-------------------------------------------------------------------------");
+            // System.Console.WriteLine(userList);
+            // System.Console.WriteLine("-------------------------------------------------------------------------");
+            return Ok(userList);
         }
 
         [HttpDelete("users/{id}")]

@@ -88,10 +88,10 @@ export class AdminComponent implements OnInit {
   loadUsers() {
     this.adminService.getUsers(this.userParams).subscribe({
       next: response => {
-        if (response.data) {
-          this.users.data = response.data;
-          this.usersCount = response.count;
-        }
+        // if (response.data) {
+        //   this.users.data = response.data;
+        //   this.usersCount = response.count;
+        // }
       }
     })
   }

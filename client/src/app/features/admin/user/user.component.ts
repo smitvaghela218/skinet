@@ -139,8 +139,8 @@ export class UserComponent {
   // users = new MatTableDataSource<User>([]);
   private adminService = inject(AdminService);
   private dialogService = inject(DialogService);
-  userParams = new UserParams();
-  usersCount = 0;
+  // userParams = new UserParams();
+  // usersCount = 0;
   private snack = inject(SnackbarService);
 
   ngOnInit(): void {

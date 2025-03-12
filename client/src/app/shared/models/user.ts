@@ -4,7 +4,7 @@ export type User = {
     lastName: string;
     email: string;
     address: Address;
-    roles: string;
+    roles: string | null;
 }
 export type Address = {
     line1: string;

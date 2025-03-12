@@ -82,9 +82,9 @@ export class AdminService {
 
   getUsers(userParams: UserParams) {
     let params = new HttpParams();
-    params = params.append('pageIndex', userParams.pageNumber);
-    params = params.append('pageSize', userParams.pageSize);
-    params = params.append('role', userParams.role);
+    // params = params.append('pageIndex', userParams.pageNumber);
+    // params = params.append('pageSize', userParams.pageSize);
+    // params = params.append('role', userParams.role);
     return this.http.get<Pagination<User>>(this.baseUrl + 'admin/users', { params });
   }
 }

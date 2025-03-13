@@ -75,14 +75,14 @@ export class AdminComponent implements OnInit {
   }
 
   loadProducts() {
-    this.adminService.getProducts(this.productParams).subscribe({
-      next: response => {
-        if (response.data) {
-          this.products.data = response.data;
-          this.productsCount = response.count;
-        }
-      }
-    })
+    // this.adminService.getProducts(this.productParams).subscribe({
+    //   next: response => {
+    //     if (response.data) {
+    //       this.products.data = response.data;
+    //       this.productsCount = response.count;
+    //     }
+    //   }
+    // })
   }
 
   loadUsers() {

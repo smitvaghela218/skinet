@@ -136,12 +136,12 @@ export class ProductTableComponent implements OnInit {
   }
 
   loadProducts() {
-    this.adminService.getProducts(this.productParams).subscribe({
+    this.adminService.getProducts().subscribe({
       next: response => {
-        if (response.data) {
-          this.products.data = response.data;
-          this.rowData = response.data;
-          this.productsCount = response.count;
+        if (response) {
+          // this.products.data = response.data;
+          this.rowData = response;
+          // this.productsCount = response.count;
         }
       }
     })

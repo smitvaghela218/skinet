@@ -72,12 +72,12 @@ export class AdminService {
   deleteUser(id: string) {
     return this.http.delete(this.baseUrl + 'admin/users/' + id);
   }
-  getProducts(productParams: ProductParams) {
-    let params = new HttpParams();
-    params = params.append('pageIndex', productParams.pageNumber);
-    params = params.append('pageSize', productParams.pageSize);
+  getProducts() {
+    // let params = new HttpParams();
+    // params = params.append('pageIndex', productParams.pageNumber);
+    // params = params.append('pageSize', productParams.pageSize);
     // params = params.append('sort', 'name');
-    return this.http.get<Pagination<Product>>(this.baseUrl + 'products', { params });
+    return this.http.get<Product[]>(this.baseUrl + 'admin/products',);
   }
 
   getUsers(userParams: UserParams) {

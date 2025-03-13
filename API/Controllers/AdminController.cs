@@ -23,6 +23,15 @@ namespace API.Controllers
             return await CreatePagedResult(unit.Repository<Order>(), spec, specParams.PageIndex, specParams.PageSize, o => o.ToDto());
         }
 
+        [HttpGet("products")]
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+        {
+            var products = await unit.Repository<Product>().ListAllAsync();
+
+            return Ok(products);
+            // return await CreatePagedResult(unit.Repository<Order>(), spec, specParams.PageIndex, specParams.PageSize, o => o.ToDto());
+        }
+
 
         [HttpGet("orders/{id:int}")]
         public async Task<ActionResult<OrderDto>> GetOrderById(int id)

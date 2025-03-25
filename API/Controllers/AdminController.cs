@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using API.DTOs;
 using API.Extensions;
 using API.RequestHelpers;
@@ -7,6 +10,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +26,14 @@ namespace API.Controllers
             var spec = new OrderSpecification(specParams);
             return await CreatePagedResult(unit.Repository<Order>(), spec, specParams.PageIndex, specParams.PageSize, o => o.ToDto());
         }
+
+        // [HttpGet("orders")]
+        // public async Task<ActionResult<List<OrderDto>>> GetOrders()
+        // {
+        //     var items = await unit.Repository<Order>().ListAllAsync();
+        //     var dtoItems = items.Select(o => o.ToDto()).ToList();
+        //     return Ok(dtoItems);
+        // }
 
         [HttpGet("products")]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
@@ -71,35 +83,57 @@ namespace API.Controllers
             return BadRequest("Problem refunding order");
         }
 
+        // [HttpGet("users")]
+        // public async Task<ActionResult<Pagination<UserDto>>> GetUsers([FromQuery] UserSpecParams specParams)
+        // {
+        //     var users = userManager.Users.OrderBy(o => o.Email).ToList();
+        //     var userList = new List<UserDto>();
+
+        //     foreach (var user in users)
+        //     {
+        //         var roles = await userManager.GetRolesAsync(user); // Fetch roles separately
+        //         if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
+        //         {
+        //             userList.Add(new UserDto
+        //             {
+        //                 Id = user.Id,
+        //                 FirstName = user.FirstName,
+        //                 LastName = user.LastName,
+        //                 Email = user.Email,
+        //                 Address = user.Address?.ToDto(), // Avoid null reference
+        //                 Roles = roles.Count > 0 ? roles.ToList()[0] : null// Convert roles to list
+        //             });
+        //         }
+        //     }
+
+        //     var totalCount = userList.Count;
+
+        //     var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
+        //         .Take(specParams.PageSize).ToList());
+
+        //     return Ok(pagination);
+        // }
+
         [HttpGet("users")]
-        public async Task<ActionResult<Pagination<UserDto>>> GetUsers([FromQuery] UserSpecParams specParams)
+        public async Task<ActionResult<IReadOnlyList<UserDto>>> GetUsers()
         {
             var users = userManager.Users.OrderBy(o => o.Email).ToList();
             var userList = new List<UserDto>();
 
             foreach (var user in users)
             {
-                var roles = await userManager.GetRolesAsync(user); // Fetch roles separately
-                if (string.IsNullOrEmpty(specParams.Role) || specParams.Role == "All" || roles.Contains(specParams.Role))
+                var roles = await userManager.GetRolesAsync(user);
+                userList.Add(new UserDto
                 {
-                    userList.Add(new UserDto
-                    {
-                        Id = user.Id,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Address = user.Address?.ToDto(), // Avoid null reference
-                        Roles = roles.Count > 0 ? roles.ToList()[0] : null// Convert roles to list
-                    });
-                }
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Address = user.Address?.ToDto(), // Avoid null reference
+                    Roles = roles.Count > 0 ? roles.ToList()[0] : null// Convert roles to list
+                });
             }
-
-            var totalCount = userList.Count;
-
-            var pagination = new Pagination<UserDto>(specParams.PageIndex, specParams.PageSize, totalCount, userList.Skip((specParams.PageIndex - 1) * specParams.PageSize)
-                .Take(specParams.PageSize).ToList());
-
-            return Ok(pagination);
+            return Ok(userList);
         }
 
         [HttpDelete("users/{id}")]

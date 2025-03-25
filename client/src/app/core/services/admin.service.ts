@@ -80,11 +80,11 @@ export class AdminService {
     return this.http.get<Product[]>(this.baseUrl + 'admin/products',);
   }
 
-  getUsers(userParams: UserParams) {
-    let params = new HttpParams();
-    params = params.append('pageIndex', userParams.pageNumber);
-    params = params.append('pageSize', userParams.pageSize);
-    params = params.append('role', userParams.role);
-    return this.http.get<Pagination<User>>(this.baseUrl + 'admin/users', { params });
+  getUsers() {
+    // let params = new HttpParams();
+    // params = params.append('pageIndex', userParams.pageNumber);
+    // params = params.append('pageSize', userParams.pageSize);
+    // params = params.append('role', userParams.role);
+    return this.http.get<User[]>(this.baseUrl + 'admin/users');
   }
 }

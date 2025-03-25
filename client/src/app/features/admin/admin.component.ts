@@ -64,14 +64,14 @@ export class AdminComponent implements OnInit {
   }
 
   loadOrders() {
-    this.adminService.getOrders(this.orderParams).subscribe({
-      next: response => {
-        if (response.data) {
-          this.orders.data = response.data;
-          this.ordersCount = response.count;
-        }
-      }
-    })
+    // this.adminService.getOrders(this.orderParams).subscribe({
+    //   next: response => {
+    //     if (response.data) {
+    //       this.orders.data = response.data;
+    //       this.ordersCount = response.count;
+    //     }
+    //   }
+    // })
   }
 
   loadProducts() {
@@ -86,14 +86,14 @@ export class AdminComponent implements OnInit {
   }
 
   loadUsers() {
-    this.adminService.getUsers(this.userParams).subscribe({
-      next: response => {
-        if (response.data) {
-          this.users.data = response.data;
-          this.usersCount = response.count;
-        }
-      }
-    })
+    // this.adminService.getUsers(this.userParams).subscribe({
+    //   next: response => {
+    //     if (response.data) {
+    //       this.users.data = response.data;
+    //       this.usersCount = response.count;
+    //     }
+    //   }
+    // })
   }
 
   onUserPageChange(event: PageEvent) {

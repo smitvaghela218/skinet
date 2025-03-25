@@ -148,17 +148,17 @@ export class UserComponent {
   }
 
   loadUsers() {
-    this.adminService.getUsers(this.userParams).subscribe({
-      next: response => {
-        if (response.data) {
-          // this.users.data = response.data;
-          this.rowData = response.data;
-          console.log(this.rowData);
+    // this.adminService.getUsers(this.userParams).subscribe({
+    //   next: response => {
+    //     if (response.data) {
+    //       // this.users.data = response.data;
+    //       this.rowData = response.data;
+    //       console.log(this.rowData);
 
-          // this.usersCount = response.count;
-        }
-      }
-    })
+    //       // this.usersCount = response.count;
+    //     }
+    //   }
+    // })
   }
 
   // onUserPageChange(event: PageEvent) {

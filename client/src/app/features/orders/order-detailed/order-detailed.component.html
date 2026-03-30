@@ -30,19 +30,20 @@
                     <dd class="mt-1 text-gray-700">{{order.buyerEmail}}</dd>
                 </dl>
                 <dl>
-                    <dt class="font-medium text-gray-600">Order Status</dt>
-                    <dd class="mt-1">
-                        <span class="px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition duration-300"
-                            [ngClass]="{
-                                'bg-yellow-500 text-black': order.status === 'Pending',
-                                'bg-green-600 text-white': order.status === 'PaymentReceived',
-                                'bg-red-600 text-white': order.status === 'PaymentFailed',
-                                'bg-orange-500 text-white': order.status === 'PaymentMismatch',
-                                'bg-gray-500 text-white': order.status === 'Refunded'
-                            }">
-                            {{ order.status }}
-                        </span>
-                    </dd>
+                <dt class="font-medium text-gray-600">Order Status</dt>
+                <dd class="mt-1">
+                    <span
+                    class="px-4 py-2 text-sm font-semibold rounded-full shadow-sm transition duration-300 text-white"
+                    [ngClass]="{
+                        'bg-yellow-500': order.status === 'Pending',
+                        'bg-green-600': order.status === 'PaymentReceived',
+                        'bg-red-600': order.status === 'PaymentFailed',
+                        'bg-orange-500': order.status === 'PaymentMismatch',
+                        'bg-gray-500': order.status === 'Refunded'
+                    }">
+                    {{ order.status }}
+                    </span>
+                </dd>
                 </dl>
 
                 <dl>

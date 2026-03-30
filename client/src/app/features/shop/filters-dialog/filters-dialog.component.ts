@@ -33,7 +33,7 @@ export class FiltersDialogComponent {
       {
         selectedBrands: this.selectedBrands,
         selectedTypes: this.selectedTypes
-      }
+      }// our dialog result and object 
     )
   }
 

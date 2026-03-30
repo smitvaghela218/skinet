@@ -50,7 +50,7 @@ public class ProductsController(IUnitOfWork unit) : BaseApiController
         if (!allowedExtensions.Contains(fileExtension))
             return BadRequest("Invalid file type. Allowed formats: jpg, jpeg, png.");
 
-        long maxFileSize = 2 * 1024 * 1024; // 5MB
+        long maxFileSize = 2 * 1024 * 1024; // 2MB
         if (file.Length > maxFileSize)
             return BadRequest("File size exceeds the 2MB limit.");
 

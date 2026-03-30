@@ -77,7 +77,7 @@ export class EditUserComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error editing user:', err)
-        // this.validationErrors = err
+        this.validationErrors = err
       }
     });
   }

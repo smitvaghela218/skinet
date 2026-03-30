@@ -1,4 +1,4 @@
-@if (orders) {
+@if (orders.length > 0) {
 <div class="mx-auto mt-24 max-w-7xl bg-white shadow-xl rounded-xl p-8 border border-gray-200">
     <h2 class="font-semibold text-3xl mb-8 text-center text-gray-900">My Orders</h2>
 
@@ -20,7 +20,7 @@
                     <td class="px-6 py-4 text-gray-700">{{order.orderDate | date: 'medium'}}</td>
                     <td class="px-6 py-4 font-semibold text-[#7d00fa]">{{order.total | currency : 'INR'}}</td>
                     <td class="px-6 py-4">
-                        <span class="px-3 py-1 text-sm font-semibold rounded-lg" [ngClass]="{
+                        <span class="px-3 py-1 text-sm font-semibold rounded-lg text-white" [ngClass]="{
                             'bg-yellow-500': order.status === 'Pending',
                             'bg-green-600': order.status === 'PaymentReceived',
                             'bg-red-600': order.status === 'PaymentFailed',
@@ -36,4 +36,8 @@
         </table>
     </div>
 </div>
+}
+@else {
+    <app-empty-state message="Your shopping orders is empty" icon="history" actionText="Go to shop"
+        (action)="onAction()" />
 }

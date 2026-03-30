@@ -3,7 +3,7 @@
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
 
         <div class="text-center mb-6">
-            <h1 cl ass="text-3xl font-semibold text-primary">Update Product</h1>
+            <h1 class="text-3xl font-semibold text-primary">Update User</h1>
         </div>
 
         <!-- Product Id -->
@@ -35,14 +35,14 @@
         <!-- Price -->
         <mat-form-field appearance="outline" class="w-full mb-4">
             <mat-label>Price</mat-label>
-            <input formControlName="price" type="number" matInput />
+            <input min="80"  formControlName="price" type="number" matInput />
             @if(productForm.get('price')?.hasError('required'))
             {
             <mat-error>Price is required</mat-error>
             }
             @if(productForm.get('price')?.hasError('min'))
             {
-            <mat-error>Price must be > 0</mat-error>
+            <mat-error>Price must be >= 80</mat-error>
             }
         </mat-form-field>
 
@@ -75,7 +75,7 @@
                    focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary" (change)="onChange($event)"
             accept="image/png, image/jpeg, image/jpg" />
         <p class="mt-1 text-sm text-gray-500" id="file_input_help">
-            SVG, PNG, JPG or GIF (MAX. 800x400px).
+            jpg, jpeg, png (MAX. 2MB).
         </p>
         <div>
             <mat-error *ngIf="fileError">{{ fileError }}</mat-error>
@@ -108,14 +108,14 @@
         <!-- Quantity in Stock -->
         <mat-form-field appearance="outline" class="w-full mb-4">
             <mat-label>Quantity in Stock</mat-label>
-            <input formControlName="quantityInStock" type="number" matInput />
+            <input min="1"  formControlName="quantityInStock" type="number" matInput />
             @if(productForm.get('quantityInStock')?.hasError('required'))
             {
             <mat-error>Quantity in Stock is required</mat-error>
             }
             @if(productForm.get('quantityInStock')?.hasError('min'))
             {
-            <mat-error>Quantity in Stock must be > 1</mat-error>
+            <mat-error>Quantity in Stock must be >= 1</mat-error>
             }
         </mat-form-field>
 

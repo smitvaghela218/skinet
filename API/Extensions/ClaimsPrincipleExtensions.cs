@@ -14,7 +14,7 @@ public static class ClaimsPrincipleExtensions
         var userToReturn = await userManager.Users.FirstOrDefaultAsync(x => x.Email == user.GetEmail());
         if (userToReturn == null)
         {
-            throw new Exception("User not found");
+            throw new AuthenticationException("User not found");
         }
         return userToReturn;
     }

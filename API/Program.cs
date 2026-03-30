@@ -40,8 +40,9 @@ builder.Services.AddIdentityApiEndpoints<AppUser>()
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddSignalR();//Registers SignalR services
 builder.Services.AddSwaggerGen();
+// befor all line consinder as services are inject into other classes inside our application
 var app = builder.Build();
-
+// after above consinder as middelweare
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

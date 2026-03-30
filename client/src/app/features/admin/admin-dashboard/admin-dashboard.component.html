@@ -62,7 +62,7 @@
                         <td class="px-6 py-4 font-semibold ">{{ order.totalAmount | currency: 'INR' }}
                         </td>
                         <td class="px-6 py-4">
-                            <span class="px-3 py-1 text-sm font-semibold rounded-lg" [ngClass]="{
+                            <span class="px-3 py-1 text-sm font-semibold rounded-lg text-white" [ngClass]="{
                                                                       'bg-yellow-500': order.status === 'Pending',
                             'bg-green-600': order.status === 'PaymentReceived',
                             'bg-red-600': order.status === 'PaymentFailed',

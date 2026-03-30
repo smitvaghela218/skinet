@@ -52,6 +52,6 @@ export const routes: Routes = [
     // { path: 'user', component: UserComponent, },
     { path: 'admin/user/:id', component: EditUserComponent, canActivate: [authGuard, adminGuard] },
     { path: 'admin/order-table', component: OrderTableComponent, canActivate: [authGuard, adminGuard] },
-    { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'admin', component: AdminDashboardComponent, canActivate: [authGuard, adminGuard] },
     { path: '**', redirectTo: 'not-found', pathMatch: 'full' }, // default pathMatch is prefix
 ];

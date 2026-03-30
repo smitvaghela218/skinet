@@ -165,11 +165,11 @@ namespace API.Controllers
         public async Task<ActionResult> CreateUser(AdminCreateUserDto adminCreateUserDto)
         {
             // Check if email is already taken
-            var existingUser = await userManager.FindByEmailAsync(adminCreateUserDto.Email);
-            if (existingUser != null)
-            {
-                return BadRequest("Email is already in use.");
-            }
+            // var existingUser = await userManager.FindByEmailAsync(adminCreateUserDto.Email);
+            // if (existingUser != null)
+            // {
+            //     return BadRequest("Email is already in use.");
+            // }
             var user = new AppUser
             {
                 FirstName = adminCreateUserDto.FirstName,
@@ -234,7 +234,15 @@ namespace API.Controllers
             user.UserName = model.Email;
 
             var result = await userManager.UpdateAsync(user);
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return ValidationProblem();
+            }
+            // if (!result.Succeeded) return BadRequest(result.Errors);
 
             // If role is updated
             var currentRoles = await userManager.GetRolesAsync(user);
